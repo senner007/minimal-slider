@@ -6,4 +6,4 @@ minimal slider
 - npm install jquery
 
 ### Run
-- parcel index.html
+- parcel index.html or npm run dev
