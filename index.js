@@ -17,7 +17,6 @@ $("#buttonContainer button:nth-child(2)").on('click', function () {
 })
 
 $(window).on('keyup', function (e) {
-    move.moveTo(Number(e.target.value)); 
-    e.target.value = "";
+    move.moveTo(Number(e.key)); 
 })
 
