@@ -21,8 +21,7 @@ export const Move = function (list) {
 
     function reStyle() {
 
-        list.css('width', '100%');
-        var width = list.width();
+        var width = list.parent().width();
 
         list.css('width', width * list.children().length + 'px').children().each(function (index, li) {
             $(li).css({
