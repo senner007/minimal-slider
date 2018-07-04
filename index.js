@@ -21,7 +21,6 @@ var moveMarginBorder = Move({
 });
 
 
-
 $("#buttonContainer button:nth-child(1)").on('click', function () {
     moveFullPage.moveLeft();
     moveMarginBorder.moveLeft();
