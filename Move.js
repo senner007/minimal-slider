@@ -12,20 +12,20 @@ export const Move = function (o) {
     var elems = list.children().length;
     var transitionState = 0;
     var lis = list.children();
-    var marginBorder = (parseInt(lis.css('margin-left')) 
-        + parseInt(lis.css('margin-right')) 
-        + parseInt(lis.css('border-left-width')) 
-        + parseInt(lis.css('border-right-width')))
+    var marginBorder = (parseInt(lis.css('margin-left')) +
+        parseInt(lis.css('margin-right')) +
+        parseInt(lis.css('border-left-width')) +
+        parseInt(lis.css('border-right-width')))
 
 
-    function scrollJump(width, dist) {
+    function scrollJump(width, callback) {
         listJs.style.transitionDuration = "0.0s";
         listJs.style.transform = "translateX(" + width + "px)";
         transitionState = width;
 
         setTimeout(function () {
             listJs.style.transitionDuration = speed;
-            moveMe(dist);
+            callback();
         }, 0)
     }
 
@@ -44,13 +44,13 @@ export const Move = function (o) {
 
     function setStyle() {
         // list.parent().css('width', $('li').outerWidth() + "px")
-         var width = Math.round(list.parent().width());
+        var width = Math.round(list.parent().width());
 
         list.find('.clone').remove();
-        list.css('width', width* elems + 'px').children().each(function (index, li) {
+        list.css('width', width * elems + 'px').children().each(function (index, li) {
             $(li).css({
                 'width': width - marginBorder + 'px',
-                'left': (width )* index + 'px',
+                'left': (width) * index + 'px',
             })
         });
 
@@ -67,35 +67,38 @@ export const Move = function (o) {
                 .append(second.css('left', (width * (elems + 1)) + "px").addClass('clone'));
 
         }
-      
+
     }
     setStyle(list);
 
     return {
-
         moveRight: function () {
-         
             var distance = '-' + width;
             if (state === elems && infiniteScroll) {
-                scrollJump(width, distance);
-                state = 1;
+                scrollJump(width, function () {
+                    state = 1;
+                    moveMe(distance);
+                });
                 return;
+            } else if (state > elems - 1) return
+            else {
+                moveMe(distance)
+                state++;
             }
-            else if (state > elems - 1) return;
-            moveMe(distance)
-            state++;
-
         },
         moveLeft: function () {
             var distance = '+' + width;
             if (state === 1 && infiniteScroll) {
-                scrollJump((-width * (elems)), distance);
-                state = elems;
+                scrollJump((-width * (elems)), function () {
+                    state = elems;
+                    moveMe(distance);
+                });
                 return;
+            } else if (state === 1) return
+            else {
+                moveMe(distance);
+                state--;
             }
-            else if (state === 1) return;
-            moveMe(distance)
-            state--;
         },
         getState: function () {
             console.log(state)
@@ -114,7 +117,7 @@ export const Move = function (o) {
         reset: function () {
             moveHome();
             state = 1;
-           
+
         }
 
     }
