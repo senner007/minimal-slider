@@ -4,11 +4,12 @@ export const Move = function (o) {
     var state = 1;
     var list = o.parent;
     var infiniteScroll = o.infiniteScroll;
-    var speed = o.speed;
+   
     var listJs = list[0]; // vanilla js object
-    //list.parent().css('width', $('li').outerWidth()+ "px")
+    var speed = o.speed;
+    listJs.style.transitionDuration = speed;
     var width = Math.round(list.parent().width());
-
+   
     var elems = list.children().length;
     var transitionState = 0;
     var lis = list.children();
@@ -16,6 +17,8 @@ export const Move = function (o) {
         parseInt(lis.css('margin-right')) +
         parseInt(lis.css('border-left-width')) +
         parseInt(lis.css('border-right-width')))
+    
+        
 
 
     function scrollJump(width, callback) {
