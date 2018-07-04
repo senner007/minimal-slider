@@ -5,7 +5,7 @@
 
 #container {
     max-width: 50%;
-    min-width: 300px;
+    min-width: 50%;
     margin: auto;
     overflow: hidden;
 }
@@ -14,16 +14,13 @@
     width: 100%;
     height: 200px;
     margin: auto;
-      transition: transform 0.5s ease;
 }
 
 .margin-border {
- 
-    max-width: 50%;
-    min-width: 50%;
+    max-width: 45%;
+    min-width: 45%;
     height: 250px;
     margin: auto;
-      transition: transform 0.5s ease;
 }
 
 .content {
@@ -33,19 +30,15 @@
 }
 
 ul {
-     height: inherit;
-     margin: auto;
-     list-style: none;
-     /* transition: transform 0.5s ease; */
-
-     transform: translateX(0px);
-     will-change: transform;
+    height: inherit;
+    margin: auto;
+    list-style: none;
+    transform: translateX(0px);
+    will-change: transform;
 }
 
 .full-page ul {
- 
     transition: transform 0.8s ease;
-
 }
 
 .margin-border ul {
@@ -57,7 +50,7 @@ li {
     float: left;
     background-color: lightseagreen;
     color: white;
-    font-size: 25px;
+    font-size: 2.5vw;
     text-align: center;
     position: absolute;
     vertical-align: middle;
@@ -65,32 +58,44 @@ li {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-.full-page li {
-
-}
+.full-page li {}
 
 .margin-border li {
-    border: 2px solid black; 
+    border: 2px solid darkslategray;
     margin-top: 20px;
     margin-left: 15px;
     margin-right: 15px;
 }
 
-#buttonContainer {
-    max-width: 50%;
-    min-width: 300px;
-    margin: auto;
-    margin-top: 20px;
+#buttonStyle {
+    position: absolute;
+    width: 50%;
+    z-index: 2;
+    margin-top: 100px;
+    font-weight: bold;
+    opacity: 0.9;
+    color: black;
+    font-size: 30px;
 }
 
-#buttonContainer button:nth-child(1) {
-    width: 100px;
+button {
+    width: 50px;
     height: 50px;
-    float: left;
+    border: none;
+    outline: none;
+    border: 2px solid darkslategray;
+    background-color: azure;
+    font-size: 30px;
+    margin-right: -25px;
+    border-radius: 5%;
 }
 
-#buttonContainer button:nth-child(2) {
-    width: 100px;
-    height: 50px;
+.next {
     float: right;
+     margin-right: -25px;
+}
+
+.prev {
+    float: left;
+    margin-left: -25px;
 }

@@ -1,17 +1,19 @@
 import $ from 'jquery';
 import {Move} from './Move.js';
 
+
 $(window).resize(function () {
     console.log("recalculate")
     moveFullPage.reCalculate();
     moveMarginBorder.reCalculate();
+    
  })
 
 // moveEnd 
  $('.margin-border').find('ul').on('moveEnd', function (e, param) {
      console.log('moveend' + " - event fired on page: " + param  + "!")
+     moveFullPage.moveTo(param);
  })
-
 
 
 var moveFullPage = Move({
@@ -26,20 +28,19 @@ var moveMarginBorder = Move({
 
 
 // moveLeft
-$("#buttonContainer button:nth-child(1)").on('click', function () {
-    moveFullPage.moveLeft();
+$(".prev").on('click', function () {
+
     moveMarginBorder.moveLeft();
 })
 
 // moveRight
-$("#buttonContainer button:nth-child(2)").on('click', function () {
-    moveFullPage.moveRight();
+$(".next").on('click', function () {
+
     moveMarginBorder.moveRight();
 })
 
 //moveTo
 $(window).on('keyup', function (e) {
-    moveFullPage.moveTo(Number(e.key)); 
     moveMarginBorder.moveTo(Number(e.key)); 
 })
 
