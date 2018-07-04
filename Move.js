@@ -11,10 +11,7 @@ export const Move = function (o) {
     var elems = list.children().length;
     var transitionState = 0;
     var lis = list.children();
-    var marginBorder = (parseInt(lis.css('margin-left')) +
-        parseInt(lis.css('margin-right')) +
-        parseInt(lis.css('border-left-width')) +
-        parseInt(lis.css('border-right-width')));
+    var marginBorder = parseInt(lis.outerWidth(true) - lis.width());
 
     function scrollJump(width, callback) {
         listJs.style.transitionDuration = "0.0s";
@@ -52,7 +49,7 @@ export const Move = function (o) {
         width = Math.round(list.parent().width());
 
         list.find('.clone').remove();
-        list.css('width', width * elems + 'px').children().each(function (index, li) {
+        lis.each(function (index, li) {
             $(li).css({
                 'width': width - marginBorder + 'px',
                 'left': (width) * index + 'px',
