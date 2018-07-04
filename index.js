@@ -3,27 +3,38 @@ import {Move} from './Move.js';
 
 $(window).resize(function () {
     console.log("recalculate")
-        move.reCalculate();
+    moveFullPage.reCalculate();
+    moveMarginBorder.reCalculate();
  })
 
 
-var move = Move({
-    parent : $('ul'),
-    infiniteScroll : true,
+var moveFullPage = Move({
+    parent : $('.full-page').find('ul'),
+  //  infiniteScroll : true,
+    speed: "0.5s"
+});
+
+var moveMarginBorder = Move({
+    parent: $('.margin-border').find('ul'),
+    infiniteScroll: true,
     speed: "0.5s"
 });
 
 
+
 $("#buttonContainer button:nth-child(1)").on('click', function () {
-    move.moveLeft();
+    moveFullPage.moveLeft();
+    moveMarginBorder.moveLeft();
 })
 
 $("#buttonContainer button:nth-child(2)").on('click', function () {
-    move.moveRight();
+    moveFullPage.moveRight();
+    moveMarginBorder.moveRight();
 })
 
 $(window).on('keyup', function (e) {
-    move.moveTo(Number(e.key)); 
+    moveFullPage.moveTo(Number(e.key)); 
+    moveMarginBorder.moveTo(Number(e.key)); 
 })
 
 

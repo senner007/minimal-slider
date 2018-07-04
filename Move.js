@@ -11,10 +11,11 @@ export const Move = function (o) {
 
     var elems = list.children().length;
     var transitionState = 0;
-    var marginBorder = (parseInt($('li').css('margin-left')) 
-        + parseInt($('li').css('margin-right')) 
-        + parseInt($('li').css('border-left-width')) 
-        + parseInt($('li').css('border-right-width')))
+    var lis = list.children();
+    var marginBorder = (parseInt(lis.css('margin-left')) 
+        + parseInt(lis.css('margin-right')) 
+        + parseInt(lis.css('border-left-width')) 
+        + parseInt(lis.css('border-right-width')))
 
 
     function scrollJump(width, dist) {
@@ -54,7 +55,6 @@ export const Move = function (o) {
         });
 
         if (infiniteScroll) {
-            var lis = list.children();
 
             var first = lis.eq(0).clone();
             var second = lis.eq(1).clone();
