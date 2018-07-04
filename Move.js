@@ -43,9 +43,8 @@ export const Move = function (o) {
                   list.trigger('moveEnd', [state]);
               })
        }
-        var dist = Math.round(parseInt(distance))
-        listJs.style.transform = "translateX(" + (transitionState + dist) + "px)";
-        transitionState += dist;
+        listJs.style.transform = "translateX(" + (transitionState + distance) + "px)";
+        transitionState += distance;
     }
 
     function setStyle() {
