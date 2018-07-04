@@ -6,7 +6,7 @@ export const Move = function (o) {
     var infiniteScroll = o.infiniteScroll;
     var listJs = list[0]; // vanilla js object
     var speed = listJs.style.transitionDuration;
-    var isDorment = true; // only fire 1 moveEnd event after multiple repeated move calls 
+    var isDormant = true; // only fire 1 moveEnd event after multiple repeated move calls 
     var width = Math.round(list.parent().width());
     var elems = list.children().length;
     var transitionState = 0;
@@ -34,10 +34,10 @@ export const Move = function (o) {
     }
 
     function moveMe(distance) {
-       if (isDorment) {
-            isDorment = false;
+       if (isDormant) {
+            isDormant = false;
               listJs.addEventListener('transitionend', function moveend() {
-                  isDorment = true;
+                  isDormant = true;
                   listJs.removeEventListener('transitionend', moveend);
                   // $ trigger moveEnd event
                   list.trigger('moveEnd', [state]);
