@@ -16,14 +16,12 @@ $(window).resize(function () {
 
 var moveFullPage = Move({
     parent : $('.full-page').find('ul'),
-  //  infiniteScroll : true,
-    speed: "0.8s"
+    infiniteScroll : false
 });
 
 var moveMarginBorder = Move({
     parent: $('.margin-border').find('ul'),
-    infiniteScroll: true,
-    speed: "0.4s"
+    infiniteScroll: true
 });
 
 
