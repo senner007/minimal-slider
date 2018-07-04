@@ -49,8 +49,8 @@ export const Move = function (o) {
     }
 
     function setStyle() {
-        // list.parent().css('width', $('li').outerWidth() + "px")
-        var width = Math.round(list.parent().width());
+
+        width = Math.round(list.parent().width());
 
         list.find('.clone').remove();
         list.css('width', width * elems + 'px').children().each(function (index, li) {
@@ -117,7 +117,6 @@ export const Move = function (o) {
         },
         reCalculate: function () { // throttle me!;
             setStyle();
-            width = Math.round(list.parent().width());
             this.reset();
         },
         reset: function () {
