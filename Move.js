@@ -1,11 +1,32 @@
 import $ from 'jquery';
 
-export const Move = function (list) {
+export const Move = function (o) {
     var state = 1;
+    var list = o.parent;
+    var infiniteScroll = o.infiniteScroll;
+    var speed = o.speed;
     var listJs = list[0]; // vanilla js object
-    var width = reStyle(list);
+    //list.parent().css('width', $('li').outerWidth()+ "px")
+    var width = Math.round(list.parent().width());
+
     var elems = list.children().length;
     var transitionState = 0;
+    var marginBorder = (parseInt($('li').css('margin-left')) 
+        + parseInt($('li').css('margin-right')) 
+        + parseInt($('li').css('border-left-width')) 
+        + parseInt($('li').css('border-right-width')))
+
+
+    function scrollJump(width, dist) {
+        listJs.style.transitionDuration = "0.0s";
+        listJs.style.transform = "translateX(" + width + "px)";
+        transitionState = width;
+
+        setTimeout(function () {
+            listJs.style.transitionDuration = speed;
+            moveMe(dist);
+        }, 0)
+    }
 
     function moveHome() {
 
@@ -14,35 +35,66 @@ export const Move = function (list) {
     }
 
     function moveMe(distance) {
+        var dist = Math.round(parseInt(distance))
+        listJs.style.transform = "translateX(" + (transitionState + dist) + "px)";
+        transitionState += dist;
 
-        listJs.style.transform = "translateX(" + (transitionState + parseInt(distance)) + "px)";
-        transitionState += parseInt(distance);
     }
 
-    function reStyle() {
+    function setStyle() {
+        // list.parent().css('width', $('li').outerWidth() + "px")
+         var width = Math.round(list.parent().width());
 
-        var width = list.parent().width();
-
-        list.css('width', width * list.children().length + 'px').children().each(function (index, li) {
+        list.find('.clone').remove();
+        list.css('width', width* elems + 'px').children().each(function (index, li) {
             $(li).css({
-                'width': width + 'px',
-                'left': width * index + 'px'
+                'width': width - marginBorder + 'px',
+                'left': (width )* index + 'px',
             })
-        })
+        });
 
-        return width;
+        if (infiniteScroll) {
+            var lis = list.children();
+
+            var first = lis.eq(0).clone();
+            var second = lis.eq(1).clone();
+            var last = lis.eq(elems - 1).clone();
+            var nextLast = lis.eq(elems - 2).clone();
+
+            list.prepend(last.css('left', -width + "px").addClass('clone'))
+                .prepend(nextLast.css('left', -width * 2 + "px").addClass('clone'))
+                .append(first.css('left', (width * elems) + "px").addClass('clone'))
+                .append(second.css('left', (width * (elems + 1)) + "px").addClass('clone'));
+
+        }
+      
     }
+    setStyle(list);
 
     return {
 
         moveRight: function () {
-            if (state > elems - 1) return;
-            moveMe('-' + width)
+         
+            var distance = '-' + width;
+            if (state === elems && infiniteScroll) {
+                scrollJump(width, distance);
+                state = 1;
+                return;
+            }
+            else if (state > elems - 1) return;
+            moveMe(distance)
             state++;
+
         },
         moveLeft: function () {
-            if (state === 1) return;
-            moveMe('+' + width)
+            var distance = '+' + width;
+            if (state === 1 && infiniteScroll) {
+                scrollJump((-width * (elems)), distance);
+                state = elems;
+                return;
+            }
+            else if (state === 1) return;
+            moveMe(distance)
             state--;
         },
         getState: function () {
@@ -54,13 +106,15 @@ export const Move = function (list) {
             moveMe(width * (state - num))
             state = num;
         },
-        reCalculate: function () {
-            width = reStyle()
+        reCalculate: function () { // throttle me!;
+            setStyle();
+            width = Math.round(list.parent().width());
             this.reset();
         },
         reset: function () {
-            state = 1;
             moveHome();
+            state = 1;
+           
         }
 
     }
