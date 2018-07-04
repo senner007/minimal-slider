@@ -12,6 +12,7 @@ export const Move = function (o) {
     var transitionState = 0;
     var lis = list.children();
     var marginBorder = parseInt(lis.outerWidth(true) - lis.width());
+  
 
     function scrollJump(width, callback) {
         listJs.style.transitionDuration = "0.0s";
@@ -36,8 +37,12 @@ export const Move = function (o) {
               listJs.addEventListener('transitionend', function moveend() {
                   isDormant = true;
                   listJs.removeEventListener('transitionend', moveend);
-                  // $ trigger moveEnd event
-                  list.trigger('moveEnd', [state]);
+
+                  listJs.dispatchEvent(new CustomEvent('moveEnd', {
+                              detail: state
+                          }));
+                 // $ trigger moveEnd event
+                 // list.trigger('moveEnd', [state]);
               })
        }
         listJs.style.transform = "translateX(" + (transitionState + parseInt(distance)) + "px)";
