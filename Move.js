@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import './css.css';
 
 export const Move = function (o) {
 
@@ -94,7 +95,7 @@ export const Move = function (o) {
         }
 
     }
-    setStyle(list);
+    setStyle();
 
     return {
         moveRight: function () {
