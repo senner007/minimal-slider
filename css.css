@@ -10,14 +10,13 @@
 }
 
 .full-page {
-    width: 100%;
+    /* width: 100%; */
     height: 200px;
     margin: auto;
 }
 
 .margin-border {
-    max-width: 45%;
-    min-width: 45%;
+    /* width : 100%; */
     height: 250px;
     margin: auto;
 }
@@ -57,13 +56,17 @@ li {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
-.full-page li {}
+.full-page li {
+    width: 100%;
+}
 
 .margin-border li {
     border: 2px solid darkslategray;
     margin-top: 20px;
     margin-left: 15px;
     margin-right: 15px;
+    width: 70%;
+    min-width: 100px;
 }
 
 #buttonStyle {
@@ -90,7 +93,7 @@ button {
 
 .next {
     float: right;
-     margin-right: -25px;
+    margin-right: -25px;
 }
 
 .prev {

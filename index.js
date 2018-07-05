@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import {Move} from './Move.js';
-
+import {Move} from './Move';
 
 
 // moveEnd
@@ -16,12 +15,12 @@ document.querySelector('.margin-border ul').addEventListener('moveEnd', function
 })
 
 var moveFullPage = Move({
-    parent : $('.full-page').find('ul'),
+    ul : $('.full-page').find('ul'),
     infiniteScroll : false
 });
 
 var moveMarginBorder = Move({
-    parent: $('.margin-border').find('ul'),
+    ul: $('.margin-border').find('ul'),
     infiniteScroll: true
 });
 
