@@ -1,7 +1,17 @@
 import $ from 'jquery';
-import {Move} from './Move';
+import {
+    Move
+} from './Move';
 
 
+var isTouch = (function is_touch_device() {
+    return (('ontouchstart' in window) ||
+        (navigator.MaxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+})();
+
+var isPointer = (window.PointerEvent);
+var eClick = isTouch ? 'touchstart' : isPointer ? 'pointerdown' : 'click'
 // moveEnd
 //  $('.margin-border').find('ul').on('moveEnd', function (e, param) {
 //      console.log('moveend' + " - event fired on page: " + param  + "!")
@@ -15,32 +25,34 @@ document.querySelector('.margin-border ul').addEventListener('moveEnd', function
 })
 
 var moveFullPage = Move({
-    ul : $('.full-page').find('ul'),
-    infiniteScroll : false,
-    touchDrag : false
+    ul: $('.full-page').find('ul'),
+    infiniteScroll: false,
+    touchDrag: false
 });
 
 var moveMarginBorder = Move({
     ul: $('.margin-border').find('ul'),
     infiniteScroll: true,
-    touchDrag : true
+    touchDrag: true
 });
 
 
 // moveLeft
-document.querySelector(".prev").addEventListener('click', function () {
-
+document.querySelector(".prev").addEventListener(eClick, function (e) {
+    e.preventDefault();
+    e.stopPropagation();
     moveMarginBorder.moveLeft();
 })
 
 // moveRight
-document.querySelector(".next").addEventListener('click', function () {
-
+document.querySelector(".next").addEventListener(eClick, function (e) {
+    e.preventDefault();
+    e.stopPropagation();
     moveMarginBorder.moveRight();
 })
 
 //moveTo
- window.addEventListener('keyup', function (e) {
+window.addEventListener('keyup', function (e) {
     moveMarginBorder.moveTo(Number(e.key));
 });
 
@@ -48,6 +60,7 @@ document.querySelector(".next").addEventListener('click', function () {
 (function () {
     window.addEventListener("resize", resizeThrottler, false);
     var resizeTimeout;
+
     function resizeThrottler() {
         // ignore resize events as long as an actualResizeHandler execution is in the queue
         if (!resizeTimeout) {
@@ -59,11 +72,10 @@ document.querySelector(".next").addEventListener('click', function () {
             }, 66);
         }
     }
+
     function actualResizeHandler() {
-       console.log("recalculate")
-       moveFullPage.reCalculate();
-       moveMarginBorder.reCalculate();
+        console.log("recalculate")
+        moveFullPage.reCalculate();
+        moveMarginBorder.reCalculate();
     }
 }());
-
-
