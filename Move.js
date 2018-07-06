@@ -17,58 +17,55 @@ export const Move = function (o) {
     var orig;
     var liOuter;
 
-    function scrollJump(distance, callback) {
-        listJs.style.transitionDuration = "0.0s";
-        listJs.style.transform = "translateX(" + distance + "px)";
-        transitionState = distance;
+    function moveHome() {
+        listJs.style.transform = "translateX(" + 0 + "px)";
+        transitionState = 0;
+    }
 
+    function moveMe(distance, setSpeed, callback) {
+        distance = Math.round(distance);
+
+        if (isDormant) {
+            isDormant = false;
+            listJs.addEventListener('transitionend', function moveend() {
+                isDormant = true;
+                listJs.removeEventListener('transitionend', moveend);
+
+                listJs.dispatchEvent(new CustomEvent('moveEnd', {
+                    detail: state
+                }));
+                // $ trigger moveEnd event
+                // list.trigger('moveEnd', [state]);
+            })
+        }
+        listJs.style.transitionDuration = setSpeed;
+        listJs.style.transform = "translateX(" + (transitionState + distance) + "px)";
+        transitionState += distance;
+
+        if (!callback) return;
         setTimeout(function () {
             listJs.style.transitionDuration = speed;
             callback();
         }, 0)
     }
 
-    function moveHome() {
-
-        listJs.style.transform = "translateX(" + 0 + "px)";
-        transitionState = 0;
-    }
-
-    function moveMe(distance) {
-       if (isDormant) {
-            isDormant = false;
-              listJs.addEventListener('transitionend', function moveend() {
-                  isDormant = true;
-                  listJs.removeEventListener('transitionend', moveend);
-
-                  listJs.dispatchEvent(new CustomEvent('moveEnd', {
-                              detail: state
-                          }));
-                 // $ trigger moveEnd event
-                 // list.trigger('moveEnd', [state]);
-              })
-       }
-        listJs.style.transform = "translateX(" + (transitionState + parseInt(distance)) + "px)";
-        transitionState += parseInt(distance);
-    }
-
     function setStyle() {
 
-         var ulParentwidth = Math.round(list.parent().outerWidth(true));
-        
-         if ( !orig ) {
-             // style retrieves css unit value 
-             listLiJs.style.display = 'none';
-             orig = window.getComputedStyle(listLiJs)['width'];
-             listLiJs.style.display = 'block';
-         }
+        var ulParentwidth = Math.round(list.parent().outerWidth(true));
 
-         // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
-         if (orig.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
+        if (!orig) {
+            // style retrieves css unit value
+            listLiJs.style.display = 'none';
+            orig = window.getComputedStyle(listLiJs)['width'];
+            listLiJs.style.display = 'block';
+        }
+
+        // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
+        if (orig.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
             liOuter = orig.replace('%', '') / 100 * ulParentwidth
-         } else {
+        } else {
             liOuter = parseInt(lis.outerWidth(true));
-         } 
+        }
 
         list.find('.clone').remove();
         lis.each(function (index, li) {
@@ -76,7 +73,7 @@ export const Move = function (o) {
                 'width': liOuter - marginBorder + 'px',
                 'left': (liOuter) * index + (ulParentwidth / 2 - (liOuter / 2)) + 'px',
             })
-         
+
         });
 
         if (infiniteScroll) {
@@ -86,8 +83,8 @@ export const Move = function (o) {
             var last = lis.eq(elems - 1).clone();
             var nextLast = lis.eq(elems - 2).clone();
 
-            list.prepend(last.css('left', ulParentwidth/2 - liOuter/2 - liOuter + "px").addClass('clone'))
-                .prepend(nextLast.css('left', ulParentwidth / 2 - liOuter / 2 - (liOuter*2)  + "px").addClass('clone'))
+            list.prepend(last.css('left', ulParentwidth / 2 - liOuter / 2 - liOuter + "px").addClass('clone'))
+                .prepend(nextLast.css('left', ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px").addClass('clone'))
 
                 .append(first.css('left', (liOuter) * elems + (ulParentwidth / 2 - (liOuter / 2)) + "px").addClass('clone'))
                 .append(second.css('left', (liOuter) * (elems + 1) + (ulParentwidth / 2 - (liOuter / 2)) + "px").addClass('clone'));
@@ -97,32 +94,107 @@ export const Move = function (o) {
     }
     setStyle();
 
+    // touch drag
+    (function () {
+        if (!o.touchDrag) return;
+        var isTouch = (function is_touch_device() {
+            return (('ontouchstart' in window) ||
+                (navigator.MaxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+        })();
+
+        var isPointer = (window.PointerEvent);
+
+        var eStart = isTouch ? 'touchstart' : isPointer ? 'pointerdown' : 'mousedown'
+        var eMove = isTouch ? 'touchmove' : isPointer ? 'pointermove' : 'mousemove'
+        var eEnd = isTouch ? 'touchend' : isPointer ? 'pointerup' : 'mouseup'
+        var lastPageX;
+        var startTransition;
+        list.parent().on(eStart, function (e) {
+            e.preventDefault();
+
+            listJs.style.transitionDuration = "0.0s";
+
+            startTransition = transitionState;
+            lastPageX = e.pageX;
+
+            function mm(e) {
+                e.preventDefault();
+                var diff = parseInt(lastPageX - e.pageX);
+
+                if (Number.isInteger(diff) && diff != 0) {
+                    moveMe(-diff);
+                    lastPageX = e.pageX;
+                }
+            } -
+
+            $(window).on(eMove, mm);
+
+            $(window).on(eEnd, function mu() {
+
+                $(window).off(eEnd, mu)
+                $(window).off(eMove, mm)
+                listJs.style.transitionDuration = speed;
+                var diff = Math.abs(transitionState - startTransition);
+                if (diff == 0) return;
+
+                if (diff > liOuter / 2 && transitionState > startTransition) {
+
+                    if (state === 1 && infiniteScroll) {
+                        state = elems;
+                        moveMe((-liOuter * elems), "0s", function () {
+                            moveMe(liOuter - diff, speed)
+                        });
+                    } else {
+
+                        state--;
+                        moveMe(liOuter - diff, speed)
+                    }
+
+                } else if (diff > liOuter / 2 && transitionState < startTransition) {
+
+                    if (state === 5 && infiniteScroll) {
+                        moveMe((liOuter * elems), "0s", function () {
+                            moveMe(diff - liOuter)
+                            state = 1;
+                        });
+                    } else {
+                        moveMe(diff - liOuter, speed)
+                        state++;
+                    }
+
+                } else {
+                    var back = transitionState > startTransition ? -diff : diff
+                    moveMe(back, speed)
+                }
+            })
+        })
+    })();
+
     return {
         moveRight: function () {
-            var distance = '-' + liOuter;
             if (state === elems && infiniteScroll) {
-                scrollJump(liOuter, function () {
+                moveMe(liOuter * elems, "0s", function () {
                     state = 1;
-                    moveMe(distance);
+                    moveMe(-liOuter, speed);
                 });
                 return;
             } else if (state > elems - 1) return
             else {
-                moveMe(distance)
+                moveMe(-liOuter)
                 state++;
             }
         },
         moveLeft: function () {
-            var distance = '+' + liOuter;
             if (state === 1 && infiniteScroll) {
-                scrollJump((-liOuter * (elems)), function () {
+                moveMe(-liOuter * elems, "0s", function () {
                     state = elems;
-                    moveMe(distance);
+                    moveMe(liOuter, speed);
                 });
                 return;
             } else if (state === 1) return
             else {
-                moveMe(distance);
+                moveMe(liOuter);
                 state--;
             }
         },

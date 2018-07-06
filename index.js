@@ -16,12 +16,14 @@ document.querySelector('.margin-border ul').addEventListener('moveEnd', function
 
 var moveFullPage = Move({
     ul : $('.full-page').find('ul'),
-    infiniteScroll : false
+    infiniteScroll : false,
+    touchDrag : false
 });
 
 var moveMarginBorder = Move({
     ul: $('.margin-border').find('ul'),
-    infiniteScroll: true
+    infiniteScroll: true,
+    touchDrag : true
 });
 
 
