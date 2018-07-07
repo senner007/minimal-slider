@@ -12,7 +12,7 @@ export const Styler = function (list, infiniteScroll, elems) {
 
     return {
         get liOuter() {
-            return liOuter;
+            return Math.round(liOuter);
         },
         setStyle: function () {
             var marginBorder = parseInt(lis.outerWidth(true) - lis.width());
