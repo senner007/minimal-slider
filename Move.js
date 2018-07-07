@@ -1,6 +1,10 @@
 import $ from 'jquery';
-import {Mover} from './mover';
-import {Styler} from './styler';
+import {
+    Mover
+} from './mover';
+import {
+    Styler
+} from './styler';
 import './css.css';
 
 
@@ -17,6 +21,21 @@ export const Move = function (o) {
             detail: state
         }));
     })
+
+    function jumpMove(jump, jumpPoint, distance) {
+        if (state === jumpPoint && infiniteScroll) {
+            state = jumpPoint == 1 ? elems : 1
+            mover.moveMe(jump, "0s", function () {
+                mover.moveMe(distance, speed);
+            });
+            return;
+        } else if (state === jumpPoint) return
+        else {
+            mover.moveMe(distance, speed)
+            // determine direction based on jump param
+            state = jump > 0 ? state + 1 : state - 1
+        }
+    }
 
     var styles = Styler(list, infiniteScroll, elems);
     styles.setStyle();
@@ -39,9 +58,6 @@ export const Move = function (o) {
         var startTransition;
         list.parent().on(eStart, function (e) {
             e.preventDefault();
-
-            listJs.style.transitionDuration = "0.0s";
-
             startTransition = mover.transitionState;
             lastPageX = e.pageX;
 
@@ -50,7 +66,7 @@ export const Move = function (o) {
                 var diff = parseInt(lastPageX - e.pageX);
 
                 if (Number.isInteger(diff) && diff != 0) {
-                    mover.moveMe(-diff);
+                    mover.moveMe(-diff, "0s");
                     lastPageX = e.pageX;
                 }
             }
@@ -65,29 +81,9 @@ export const Move = function (o) {
                 if (diff == 0) return;
 
                 if (diff > styles.liOuter / 2 && mover.transitionState > startTransition) {
-
-                    if (state === 1 && infiniteScroll) {
-                        state = elems;
-                        mover.moveMe((-styles.liOuter * elems), "0s", function () {
-                            mover.moveMe(styles.liOuter - diff, speed)
-                        });
-                    } else {
-                        state--;
-                        mover.moveMe(styles.liOuter - diff, speed)
-                    }
-
+                    jumpMove(-styles.liOuter * elems, 1, styles.liOuter - diff)
                 } else if (diff > styles.liOuter / 2 && mover.transitionState < startTransition) {
-
-                    if (state === elems && infiniteScroll) {
-                        mover.moveMe((styles.liOuter * elems), "0s", function () {
-                            mover.moveMe(diff - styles.liOuter, speed)
-                            state = 1;
-                        });
-                    } else {
-                        mover.moveMe(diff - styles.liOuter, speed)
-                        state++;
-                    }
-
+                    jumpMove(styles.liOuter * elems, elems, diff - styles.liOuter)
                 } else {
                     var back = mover.transitionState > startTransition ? -diff : diff
                     mover.moveMe(back, speed)
@@ -98,30 +94,10 @@ export const Move = function (o) {
 
     return {
         moveRight: function () {
-            if (state === elems && infiniteScroll) {
-                mover.moveMe(styles.liOuter * elems, "0s", function () {
-                    state = 1;
-                    mover.moveMe(-styles.liOuter, speed);
-                });
-                return;
-            } else if (state > elems - 1) return
-            else {
-                mover.moveMe(-styles.liOuter, speed)
-                state++;
-            }
+            jumpMove(styles.liOuter * elems, elems, -styles.liOuter)
         },
         moveLeft: function () {
-            if (state === 1 && infiniteScroll) {
-                mover.moveMe(-styles.liOuter * elems, "0s", function () {
-                    state = elems;
-                    mover.moveMe(styles.liOuter, speed);
-                });
-                return;
-            } else if (state === 1) return
-            else {
-                mover.moveMe(styles.liOuter, speed);
-                state--;
-            }
+            jumpMove(-styles.liOuter * elems, 1, styles.liOuter)
         },
         getState: function () {
             console.log(state)
