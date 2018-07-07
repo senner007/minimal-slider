@@ -22,21 +22,20 @@ export const Move = function (o) {
         }));
     })
 
-    function jumpMove(jump, jumpPoint, distance) {
+    function jumpMove(jumpDistance, jumpPoint, distance) {
         if (state === jumpPoint && infiniteScroll) {
             state = jumpPoint == 1 ? elems : 1
-            mover.moveMe(jump, "0s", function () {
+            mover.moveMe(jumpDistance, "0s", function () {
                 mover.moveMe(distance, speed);
             });
             return;
         } else if (state === jumpPoint) return
         else {
             mover.moveMe(distance, speed)
-            // determine direction based on jump param
-            state = jump > 0 ? state + 1 : state - 1
+            // determine direction based on jumpDistance param
+            state = jumpDistance > 0 ? state + 1 : state - 1
         }
     }
-
     var styles = Styler(list, infiniteScroll, elems);
     styles.setStyle();
 
