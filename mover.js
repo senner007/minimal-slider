@@ -6,6 +6,10 @@ export const Mover = function (listJs, moveEndCallback) {
         get transitionState() {
             return transitionState;
         },
+        // PARAMS:
+        // distance : the distance to move from the current transition state
+        // setSpeed : the transition duration
+        // callback : append another moveMe call wrapped in setTimeout to allow new transition duration(setSpeed) to be applied
         moveMe: function moveMe(distance, setSpeed, callback) {
             distance = Math.round(distance);
             if (isDormant) {
@@ -14,7 +18,6 @@ export const Mover = function (listJs, moveEndCallback) {
                     isDormant = true;
                     listJs.removeEventListener('transitionend', moveend);
                     moveEndCallback();
-
                 })
             }
             listJs.style.transitionDuration = setSpeed;

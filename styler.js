@@ -5,7 +5,7 @@ export const Styler = function (list, infiniteScroll, elems) {
         lis = list.children().not('.clone'),
         listLiJs = lis[0]; // vanilla js object
 
-    // style retrieves css unit value
+    // hack to retrieve css set unit value(%|px)
     listLiJs.style.display = 'none';
     var orig = window.getComputedStyle(listLiJs)['width'];
     listLiJs.style.display = 'block';
@@ -23,8 +23,7 @@ export const Styler = function (list, infiniteScroll, elems) {
             } else {
                 liOuter = parseInt(lis.outerWidth(true));
             }
-
-            list.find('.clone').remove();
+ 
             lis.each(function (index, li) {
                 $(li).css({
                     'width': liOuter - marginBorder + 'px',
@@ -32,7 +31,9 @@ export const Styler = function (list, infiniteScroll, elems) {
                 })
             });
 
+            // append clones to appear infinite
             if (infiniteScroll) {
+                list.find('.clone').remove();
                 var first = lis.eq(0).clone();
                 var second = lis.eq(1).clone();
                 var last = lis.eq(elems - 1).clone();
