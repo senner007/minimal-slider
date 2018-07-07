@@ -78,7 +78,7 @@ export const Move = function (o) {
 
                 } else if (diff > styles.liOuter / 2 && mover.transitionState < startTransition) {
 
-                    if (state === 5 && infiniteScroll) {
+                    if (state === elems && infiniteScroll) {
                         mover.moveMe((styles.liOuter * elems), "0s", function () {
                             mover.moveMe(diff - styles.liOuter, speed)
                             state = 1;
