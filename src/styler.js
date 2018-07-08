@@ -60,10 +60,10 @@ export const Styler = function (list, infiniteScroll, elems) {
                 nextLastClone.style.left = ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px"
                 nextLastClone.classList.add('clone');
 
-                list.prepend(last)
-                    .prepend(nextLast)
-                    .append(first)
-                    .append(second);
+                list.prepend(lastClone)
+                    .prepend(nextLastClone)
+                    .append(firstClone)
+                    .append(secondClone);
             }
         }
     }
