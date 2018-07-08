@@ -43,22 +43,22 @@ export const Styler = function (list, infiniteScroll, elems) {
                     paragraph.remove();
                 }
 
-                var first = listLiJs[0].cloneNode(true);
-                var second = listLiJs[1].cloneNode(true);
-                var last = listLiJs[elems - 1].cloneNode(true);
-                var nextLast = listLiJs[elems - 2].cloneNode(true);
+                var firstClone = listLiJs[0].cloneNode(true);
+                var secondClone = listLiJs[1].cloneNode(true);
+                var lastClone = listLiJs[elems - 1].cloneNode(true);
+                var nextLastClone = listLiJs[elems - 2].cloneNode(true);
 
-                first.style.left = (liOuter) * elems + (ulParentwidth / 2 - (liOuter / 2)) + "px"
-                first.classList.add('clone');
+                firstClone.style.left = (liOuter) * elems + (ulParentwidth / 2 - (liOuter / 2)) + "px"
+                firstClone.classList.add('clone');
 
-                second.style.left = (liOuter) * (elems + 1) + (ulParentwidth / 2 - (liOuter / 2)) + "px"
-                second.classList.add('clone');
+                secondClone.style.left = (liOuter) * (elems + 1) + (ulParentwidth / 2 - (liOuter / 2)) + "px"
+                secondClone.classList.add('clone');
 
-                last.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter + "px"
-                last.classList.add('clone');
+                lastClone.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter + "px"
+                lastClone.classList.add('clone');
 
-                nextLast.style.left = ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px"
-                nextLast.classList.add('clone');
+                nextLastClone.style.left = ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px"
+                nextLastClone.classList.add('clone');
 
                 list.prepend(last)
                     .prepend(nextLast)
