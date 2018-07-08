@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {
     Move
-} from './Move';
+} from './src/Move';
 
 
 var isTouch = (function is_touch_device() {

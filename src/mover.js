@@ -30,4 +30,4 @@ export const Mover = function (listJs, moveEndCallback) {
             }, 0)
         }
     }
-};
+}

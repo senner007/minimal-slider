@@ -5,8 +5,7 @@ import {
 import {
     Styler
 } from './styler';
-import './css.css';
-
+import '../css.css';
 
 export const Move = function (o) {
     var state = 1,
@@ -42,6 +41,7 @@ export const Move = function (o) {
     var styles = Styler(list, infiniteScroll, elems);
     styles.setStyle();
 
+    
     // touch drag
     (function () {
         if (!o.touchDrag) return;
