@@ -11,6 +11,7 @@ export const Mover = function (listJs, moveEndCallback) {
         // setSpeed : the transition duration
         // callback : append another moveMe call wrapped in setTimeout to allow new transition duration(setSpeed) to be applied
         moveMe: function moveMe(distance, setSpeed, callback) {
+            if (distance === 0) return;
             distance = Math.round(distance);
             if (isDormant) {
                 isDormant = false;
