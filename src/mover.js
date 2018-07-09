@@ -21,6 +21,7 @@ export const Mover = function (listJs, moveEndCallback) {
                     moveEndCallback();
                 })
             }
+          
             listJs.style.transitionDuration = setSpeed;
             listJs.style.transform = "translateX(" + (transitionState + distance) + "px)";
             transitionState += distance;
@@ -28,7 +29,7 @@ export const Mover = function (listJs, moveEndCallback) {
             if (!callback) return;
             setTimeout(function () {
                 callback();
-            }, 0)
+            },  20) // wait for the css to apply
         }
     }
 }
