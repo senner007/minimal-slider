@@ -1,5 +1,5 @@
 import $ from 'jquery';
-export const TouchDrag = function (list, mover, styles, elems, speed) {
+export const TouchDrag = function (list, mover, styles, elems) {
    
     // determine touch and pointer support
     var isTouch = (function is_touch_device() {
