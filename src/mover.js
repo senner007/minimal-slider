@@ -1,4 +1,4 @@
-export const Mover = function (listJs, moveEndCallback) {
+export const Mover = function (listJs, speed, moveEndCallback) {
     var isDormant = true; // only fire 1 moveEnd event after multiple repeated move calls
     var transitionState = 0;
     var prevSpeed;
@@ -9,9 +9,9 @@ export const Mover = function (listJs, moveEndCallback) {
         },
         // PARAMS:
         // distance : the distance to move from the current transition state
-        // setSpeed : the transition duration
+        // setSpeed : the transition duration, defaults to set css
         // callback : append another moveMe call wrapped in setTimeout to allow new transition duration(setSpeed) to be applied
-        moveMe: function moveMe(distance, setSpeed, callback) {
+        moveMe: function moveMe(distance, setSpeed = speed, callback) {
             if (distance === 0) return;
             distance = Math.round(distance);
             if (isDormant) {
