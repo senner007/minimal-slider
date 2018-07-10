@@ -1,6 +1,7 @@
 export const Mover = function (listJs, moveEndCallback) {
     var isDormant = true; // only fire 1 moveEnd event after multiple repeated move calls
     var transitionState = 0;
+    var prevSpeed;
 
     return {
         get transitionState() {
@@ -21,10 +22,10 @@ export const Mover = function (listJs, moveEndCallback) {
                     moveEndCallback();
                 })
             }
-          
-            listJs.style.transitionDuration = setSpeed;
+            if ( setSpeed != prevSpeed )  listJs.style.transitionDuration = setSpeed;
             listJs.style.transform = "translateX(" + (transitionState + distance) + "px)";
             transitionState += distance;
+            prevSpeed = setSpeed;
 
             if (!callback) return;
             setTimeout(function () {
