@@ -27,15 +27,13 @@ export const Move = function (o) {
     mover.jumpMove = function (jumpDistance, jumpPoint, distance) {
         if (state === jumpPoint && infiniteScroll) {
             state = jumpPoint == 1 ? elems : 1
-            mover.moveMe(jumpDistance, "0s", function () {
-                mover.moveMe(distance);
-            });
+            this.moveMe(jumpDistance, "0s", () => this.moveMe(distance));
         } else if (state === jumpPoint) {
             // bounce back at end points if no infinte scroll
-            mover.moveMe(jumpDistance/elems + distance)
+            this.moveMe(jumpDistance/elems + distance)
         }
         else {
-            mover.moveMe(distance)
+            this.moveMe(distance)
             // determine direction based on jumpDistance param
             state = jumpDistance > 0 ? state + 1 : state - 1
         }
@@ -46,7 +44,6 @@ export const Move = function (o) {
 
     if (o.touchDrag) TouchDrag(list, mover, styles, elems);
    
-
     return {
         moveRight: function () {
             mover.jumpMove(styles.liOuter * elems, elems, -styles.liOuter)
