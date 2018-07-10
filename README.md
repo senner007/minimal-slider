@@ -7,3 +7,5 @@ minimal slider
 
 ### Run
 - parcel index.html or npm run dev
+
+[Demo](https://www.nielshtg.dk/minimal-slider)
