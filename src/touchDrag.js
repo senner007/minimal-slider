@@ -1,5 +1,5 @@
 import $ from 'jquery';
-export const TouchDrag = function (list, mover, styles, elems) {
+export const TouchDrag = function (list, mover, styles) {
    
     // determine touch and pointer support
     var isTouch = (function is_touch_device() {
@@ -41,10 +41,10 @@ export const TouchDrag = function (list, mover, styles, elems) {
             if (diff > styles.liOuter/2) {
                  // if moved right
                  if (mover.transitionState > startTransition) {   
-                     mover.jumpMove(-styles.liOuter * elems, 1, styles.liOuter - diff)
+                     mover.jumpMove(+1, styles.liOuter - diff)
                  // if moved left
                  } else {
-                     mover.jumpMove(styles.liOuter * elems, elems, diff - styles.liOuter)
+                     mover.jumpMove(-1, styles.liOuter - diff)
                  }
             // else bounce back 
             } else {
