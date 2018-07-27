@@ -39,8 +39,8 @@ export const Styler = function (list, infiniteScroll, elems) {
                 // Array.prototype.forEach.call(list[0].querySelectorAll('.clone'), function (node) {
                 //     node.parentNode.removeChild(node);
                 // });
-                for (var paragraph of list[0].querySelectorAll('.clone')) {
-                    paragraph.remove();
+                for (let li of list[0].querySelectorAll('.clone')) {
+                    li.remove();
                 }
 
                 var firstClone = listLiJs[0].cloneNode(true);
