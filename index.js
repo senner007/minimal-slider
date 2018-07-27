@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {
-    Move
-} from './src/Move';
+    Slider
+} from './src/Slider';
 
 
 var isTouch = (function is_touch_device() {
@@ -24,13 +24,13 @@ document.querySelector('.margin-border ul').addEventListener('moveEnd', function
     moveFullPage.moveTo(e.detail);
 })
 
-var moveFullPage = Move({
+var moveFullPage = Slider({
     ul: $('.full-page').find('ul'),
     infiniteScroll: false,
     touchDrag: false
 });
 
-var moveMarginBorder = Move({
+var moveMarginBorder = Slider({
     ul: $('.margin-border').find('ul'),
     infiniteScroll: true,
     touchDrag: true

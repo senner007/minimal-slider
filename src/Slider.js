@@ -10,7 +10,7 @@ import {
 } from './touchDrag';
 import '../css.css';
 
-export const Move = function (o) {
+export const Slider = function (o) {
     var state = 1,
         list = o.ul,
         infiniteScroll = o.infiniteScroll,
