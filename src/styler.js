@@ -1,14 +1,19 @@
 import $ from 'jquery';
 
 export const Styler = function (list, infiniteScroll, elems) {
+
     var liOuter,
         lis = list.children().not('.clone'),
         listLiJs = list[0].children; // vanilla js object
 
     // hack to retrieve css set unit value(%|px)
     listLiJs[0].style.display = 'none';
-    var orig = window.getComputedStyle(listLiJs[0])['width'];
+    var origStyle = window.getComputedStyle(listLiJs[0]);
+    var origStyleWidth = origStyle['width'];
     listLiJs[0].style.display = 'block';
+
+    var marginBorder =  parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight)+ parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth)
+
 
     return {
         get liOuter() {
@@ -17,14 +22,13 @@ export const Styler = function (list, infiniteScroll, elems) {
         setStyle: function () {
             var ulParentwidth = Math.round(list.parent().outerWidth(true));
             // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
-            if (orig.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
-                liOuter = parseInt(orig.replace('%', '') / 100 * ulParentwidth)
+            if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
+                liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth)
             } else {
-                liOuter = parseInt(lis.outerWidth(true));
+                liOuter = parseInt(lis.outerWidth(true));           
             }
 
             (function (index = 0) {
-                var marginBorder = parseInt(lis.outerWidth(true) - listLiJs[0].clientWidth);
                 for (let i = 0; i < listLiJs.length; i++) {
                     if (!listLiJs[i].classList.contains('clone')) {
                         listLiJs[i].style.width = liOuter - marginBorder + 'px'
