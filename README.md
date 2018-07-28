@@ -4,7 +4,7 @@ minimal slider
 ### Install
 - npm install -g parcel-bundler
 - npm install jquery
-- npm install jest
+- npm install --save-dev jest
 - npm install --save-dev babel-cli babel-preset-env - ( use jest with import export syntax )
 - npm install --save babel-polyfill - ( allows async testing in jest :  https://babeljs.io/docs/en/babel-polyfill/ - https://github.com/babel/babel/issues/5085)
 - npm install --save-dev jest-css-modules  - ( allows modules to import css : https://www.npmjs.com/package/jest-css-modules)
