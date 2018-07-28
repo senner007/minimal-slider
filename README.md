@@ -18,7 +18,7 @@ minimal slider
  - 2. type : npm install, or
  - 3. repeat the install process
 
- ### Production use setup:
-  - see files in prod folder
+ ### Production use setup example:
+  - download index.html, minimal.css, slider-babel.min.js in prod folder
 
 [Demo](http://www.nielshtg.dk/minimal-slider/)
