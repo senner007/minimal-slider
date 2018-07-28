@@ -15,22 +15,22 @@ var eClick = isTouch ? 'touchstart' : isPointer ? 'pointerdown' : 'click'
 // moveEnd
 //  $('.margin-border').find('ul').on('moveEnd', function (e, param) {
 //      console.log('moveend' + " - event fired on page: " + param  + "!")
-//      moveFullPage.moveTo(param);
+//      sliderFullPage.moveTo(param);
 //  })
 
 // vanilla js event dispatch
 document.querySelector('.margin-border ul').addEventListener('moveEnd', function (e) {
     console.log('moveend' + " - event fired on page: " + e.detail + "!")
-    moveFullPage.moveTo(e.detail);
+    sliderFullPage.moveTo(e.detail);
 })
 
-var moveFullPage = Slider({
+var sliderFullPage = Slider({
     ul: $('.full-page').find('ul'),
     infiniteScroll: false,
     touchDrag: false
 });
 
-var moveMarginBorder = Slider({
+var sliderMarginBorder = Slider({
     ul: $('.margin-border').find('ul'),
     infiniteScroll: true,
     touchDrag: true
@@ -41,19 +41,19 @@ var moveMarginBorder = Slider({
 document.querySelector(".prev").addEventListener(eClick, function (e) {
     e.preventDefault();
     e.stopPropagation();
-    moveMarginBorder.moveLeft();
+    sliderMarginBorder.moveLeft();
 })
 
 // moveRight
 document.querySelector(".next").addEventListener(eClick, function (e) {
     e.preventDefault();
     e.stopPropagation();
-    moveMarginBorder.moveRight();
+    sliderMarginBorder.moveRight();
 })
 
 //moveTo
 window.addEventListener('keyup', function (e) {
-    moveMarginBorder.moveTo(Number(e.key));
+    sliderMarginBorder.moveTo(Number(e.key));
 });
 
 // resize throttle
@@ -75,7 +75,7 @@ window.addEventListener('keyup', function (e) {
 
     function actualResizeHandler() {
         console.log("recalculate")
-        moveFullPage.reCalculate();
-        moveMarginBorder.reCalculate();
+        sliderFullPage.reCalculate();
+        sliderMarginBorder.reCalculate();
     }
 }());
