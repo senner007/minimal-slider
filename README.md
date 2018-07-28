@@ -1,6 +1,8 @@
 # minimal-slider
 minimal slider
 
+[Demo](http://www.nielshtg.dk/minimal-slider/)
+
 ### Install
 - npm install -g parcel-bundler
 - npm install jquery
@@ -20,5 +22,3 @@ minimal slider
 
  ### Production use setup example:
   - download index.html, minimal.css, slider-babel.min.js in prod folder
-
-[Demo](http://www.nielshtg.dk/minimal-slider/)
