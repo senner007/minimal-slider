@@ -6,7 +6,7 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
-    "scriptPreprocessor": "<rootDir>/node_modules/jest-css-modules",
+    "transform": {".*": "<rootDir>/node_modules/jest-css-modules"},
     "setupFiles": [
       "<rootDir>/jest.init.js"
      ]
