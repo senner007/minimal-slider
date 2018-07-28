@@ -25,7 +25,7 @@ export const Slider = function (o) {
     })
   
     var styles = Styler(list, infiniteScroll, elems);
-    styles.setStyle();
+    styles.setStyles();
 
   
     mover.jumpMove = function (direction, distance) {
@@ -33,7 +33,7 @@ export const Slider = function (o) {
         var jumpPoint = direction < 0 ? elems : 1;
         var jumpDistance = styles.liOuter * elems * -direction;
         if (state === jumpPoint && infiniteScroll) {
-            state = jumpPoint === 1 ? elems : 1
+            state = jumpPoint === 1 ? elems : 1;
             this.moveMe(jumpDistance, "0s", () => this.moveMe(distance));
         } else if (state === jumpPoint) {
             // bounce back at end points if no infinte scroll
@@ -44,7 +44,6 @@ export const Slider = function (o) {
             // determine direction based on direction param
             state = direction < 0 ? state + 1 : state - 1;
         }
-
     }
 
 
@@ -67,7 +66,7 @@ export const Slider = function (o) {
             state = num;
         },
         reCalculate: function () { // throttle me!;
-            styles.setStyle();
+            styles.setStyles();
             this.reset();
         },
         reset: function () {

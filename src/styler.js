@@ -19,7 +19,7 @@ export const Styler = function (list, infiniteScroll, elems) {
         get liOuter() {
             return Math.round(liOuter);
         },
-        setStyle: function () {
+        setStyles: function () {
             var ulParentwidth = Math.round(list.parent().outerWidth(true));
             // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
             if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
