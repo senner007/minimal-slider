@@ -22,7 +22,9 @@
   },
   "scripts": {
     "test": "jest --watchAll",
-    "dev": "parcel index.html"
+    "dev": "parcel index.html",
+    "transpile": "./node_modules/.bin/babel prod/slider.js --out-dir prod/babel",
+    "uglify": "uglifyjs prod/babel/prod/slider.js --compress --mangle  --output prod/slider-babel.min.js"
   },
   "repository": {
     "type": "git",
