@@ -9,7 +9,6 @@ minimal slider
 - npm install --save babel-polyfill - ( allows async testing in jest :  https://babeljs.io/docs/en/babel-polyfill/ - https://github.com/babel/babel/issues/5085)
 - npm install --save-dev jest-css-modules  - ( allows modules to import css : https://www.npmjs.com/package/jest-css-modules)
 
-
 ### Run
 - parcel index.html or npm run dev
 
@@ -18,5 +17,8 @@ minimal slider
  - 1. remove the cache dir, or
  - 2. type : npm install, or
  - 3. repeat the install process
+
+ ### Production use setup:
+  - see files in prod folder
 
 [Demo](http://www.nielshtg.dk/minimal-slider/)

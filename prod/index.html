@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- get external css -->
+    <link rel="stylesheet" href="minimal.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- example html -->
+    <div id="container">
+        <div class="full-page">
+            <ul>
+                <li>Page 1</li>
+                <li>Page 2</li>
+                <li>Page 3</li>
+                <li>Page 4</li>
+                <li>Page 5</li>
+            </ul>
+        </div>
+    </div>
+    <!-- load jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js" integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+        crossorigin="anonymous"></script>
+    <!-- load slider minified -->
+    <script src="slider.min.js"></script>
+    <!-- example setup -->
+    <script>
+        var sliderFullPage = Slider({
+            ul: $('.full-page').find('ul'),
+            infiniteScroll: false,
+            touchDrag: true
+        });
+        // listen for keyboard input (1-5)
+        window.addEventListener('keyup', function (e) {
+            sliderFullPage.moveTo(Number(e.key));
+        });
+    </script>
+</body>
+</html>
