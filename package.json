@@ -23,8 +23,8 @@
   "scripts": {
     "test": "jest",
     "dev": "parcel index.html",
-    "transpile": "./node_modules/.bin/babel prod/slider-es2015.js --out-file prod/babel/slider-transpiled.js",
-    "uglify": "uglifyjs prod/babel/slider-transpiled.js --compress --mangle --output prod/slider-babel.min.js"
+    "transpile": "./node_modules/.bin/babel prod/slider-es2015.js --out-file prod/transpile/slider-transpiled.js",
+    "uglify": "uglifyjs prod/transpile/slider-transpiled.js --compress --mangle --output prod/slider-transpiled.min.js"
   },
   "repository": {
     "type": "git",
