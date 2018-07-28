@@ -21,4 +21,4 @@ minimal slider
  - 3. repeat the install process
 
  ### Production use setup example:
-  - download index.html, minimal.css, slider-babel.min.js in prod folder
+  - download index.html, minimal.css, slider-transpiled.min.js in prod folder
