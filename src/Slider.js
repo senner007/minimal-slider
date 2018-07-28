@@ -8,7 +8,7 @@ import {
 import {
     TouchDrag
 } from './touchDrag';
-import '../css.css';
+ import '../css.css';
 
 export const Slider = function (o) {
     var state = 1,
@@ -27,6 +27,7 @@ export const Slider = function (o) {
     var styles = Styler(list, infiniteScroll, elems);
     styles.setStyle();
 
+  
     mover.jumpMove = function (direction, distance) {
         distance = distance * direction;
         var jumpPoint = direction < 0 ? elems : 1;
@@ -73,6 +74,9 @@ export const Slider = function (o) {
             mover.moveMe(-mover.transitionState);
             state = 1;
 
+        },
+        _getTransformState : function () {
+            return mover.transitionState
         }
 
     }
