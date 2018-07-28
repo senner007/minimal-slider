@@ -4,14 +4,19 @@ minimal slider
 ### Install
 - npm install -g parcel-bundler
 - npm install jquery
+- npm install jest
+- npm install --save-dev babel-cli babel-preset-env - ( use jest with import export syntax )
+- npm install --save babel-polyfill - ( allows async testing in jest :  https://babeljs.io/docs/en/babel-polyfill/)
+- npm install --save-dev jest-css-modules  - ( allows modules to import css : https://www.npmjs.com/package/jest-css-modules)
+
 
 ### Run
 - parcel index.html or npm run dev
 
 ### Fix
  - If parcel complains that functions are not functions you can:
- - 1. remove the cache dir
- - 2. type : npm install
- - 3. or repeat the install process
+ - 1. remove the cache dir, or
+ - 2. type : npm install, or
+ - 3. repeat the install process
 
 [Demo](http://www.nielshtg.dk/minimal-slider/)
