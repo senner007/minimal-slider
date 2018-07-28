@@ -21,10 +21,10 @@
     "jest-css-modules": "^1.1.0"
   },
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest",
     "dev": "parcel index.html",
-    "transpile": "./node_modules/.bin/babel prod/slider.js --out-dir prod/babel",
-    "uglify": "uglifyjs prod/babel/prod/slider.js --compress --mangle  --output prod/slider-babel.min.js"
+    "transpile": "./node_modules/.bin/babel prod/slider-es2015.js --out-file prod/babel/slider-transpiled.js",
+    "uglify": "uglifyjs prod/babel/slider-transpiled.js --compress --mangle --output prod/slider-babel.min.js"
   },
   "repository": {
     "type": "git",
