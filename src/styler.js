@@ -12,8 +12,7 @@ export const Styler = function (list, infiniteScroll, elems) {
     var origStyleWidth = origStyle['width'];
     listLiJs[0].style.display = 'block';
 
-    var marginBorder =  parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight)+ parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth)
-
+    var marginBorder = parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight) + parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth)
 
     return {
         get liOuter() {
@@ -25,7 +24,7 @@ export const Styler = function (list, infiniteScroll, elems) {
             if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
                 liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth)
             } else {
-                liOuter = parseInt(lis.outerWidth(true));           
+                liOuter = parseInt(lis.outerWidth(true));
             }
 
             (function (index = 0) {
@@ -69,6 +68,14 @@ export const Styler = function (list, infiniteScroll, elems) {
                     .append(firstClone)
                     .append(secondClone);
             }
+        },
+        add: function (position, animate) {
+            // add li at position with/without siblings reposition animation
+            // call setStyles
+        },
+        remove: function (position, animate) {
+            // remove li at position with/without siblings reposition animation
+            // call setStyles
         }
     }
 }
