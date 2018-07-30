@@ -6,10 +6,12 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
-    "transform": {".*": "<rootDir>/node_modules/jest-css-modules"},
+    "transform": {
+      ".*": "<rootDir>/node_modules/jest-css-modules"
+    },
     "setupFiles": [
       "<rootDir>/jest.init.js"
-     ]
+    ]
   },
   "dependencies": {
     "jquery": "^3.3.1"
@@ -18,7 +20,8 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "jest": "^23.4.1",
-    "jest-css-modules": "^1.1.0"
+    "jest-css-modules": "^1.1.0",
+    "parcel-bundler": "latest"
   },
   "scripts": {
     "test": "jest",
