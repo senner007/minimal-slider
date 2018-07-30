@@ -17,7 +17,10 @@ minimal slider
 - npm install
 
 ### Run
-- parcel index.html or npm run dev
+- npm run dev
+
+### Test
+- npm run test
 
 ### Fix
  - If parcel complains that functions are not functions you can:
