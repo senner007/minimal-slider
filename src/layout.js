@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export const Styler = function (list, infiniteScroll, elems) {
+export const Layout = function (list, infiniteScroll) {
 
     var liOuter,
         lis = list.children().not('.clone'),
@@ -12,17 +12,18 @@ export const Styler = function (list, infiniteScroll, elems) {
     var origStyleWidth = origStyle['width'];
     listLiJs[0].style.display = 'block';
 
-    var marginBorder = parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight) + parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth)
+    var marginBorder = parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight) + parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth);
 
     return {
         get liOuter() {
             return Math.round(liOuter);
         },
-        setStyles: function () {
+        setStyles: function (elems) {
+            
             var ulParentwidth = Math.round(list.parent().outerWidth(true));
             // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
             if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
-                liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth)
+                liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth);  
             } else {
                 liOuter = parseInt(lis.outerWidth(true));
             }
@@ -30,8 +31,8 @@ export const Styler = function (list, infiniteScroll, elems) {
             (function (index = 0) {
                 for (let i = 0; i < listLiJs.length; i++) {
                     if (!listLiJs[i].classList.contains('clone')) {
-                        listLiJs[i].style.width = liOuter - marginBorder + 'px'
-                        listLiJs[i].style.left = (liOuter) * index++ + (ulParentwidth / 2 - (liOuter / 2)) + 'px'
+                        listLiJs[i].style.width = liOuter - marginBorder + 'px';
+                        listLiJs[i].style.left = (liOuter) * index++ + (ulParentwidth / 2 - (liOuter / 2)) + 'px';
                     }
                 }
             })()
@@ -51,16 +52,16 @@ export const Styler = function (list, infiniteScroll, elems) {
                 var lastClone = listLiJs[elems - 1].cloneNode(true);
                 var nextLastClone = listLiJs[elems - 2].cloneNode(true);
 
-                firstClone.style.left = (liOuter) * elems + (ulParentwidth / 2 - (liOuter / 2)) + "px"
+                firstClone.style.left = (liOuter) * elems + (ulParentwidth / 2 - (liOuter / 2)) + "px";
                 firstClone.classList.add('clone');
 
-                secondClone.style.left = (liOuter) * (elems + 1) + (ulParentwidth / 2 - (liOuter / 2)) + "px"
+                secondClone.style.left = (liOuter) * (elems + 1) + (ulParentwidth / 2 - (liOuter / 2)) + "px";
                 secondClone.classList.add('clone');
 
-                lastClone.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter + "px"
+                lastClone.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter + "px";
                 lastClone.classList.add('clone');
 
-                nextLastClone.style.left = ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px"
+                nextLastClone.style.left = ulParentwidth / 2 - liOuter / 2 - (liOuter * 2) + "px";
                 nextLastClone.classList.add('clone');
 
                 list.prepend(lastClone)
@@ -69,11 +70,17 @@ export const Styler = function (list, infiniteScroll, elems) {
                     .append(secondClone);
             }
         },
-        add: function (position, animate) {
+        add: function (elem, position, animate) {
+            list.children().eq(position +2).after(elem);
+            lis = list.children().not('.clone');
+            listLiJs = list[0].children; // vanilla js object
             // add li at position with/without siblings reposition animation
             // call setStyles
         },
         remove: function (position, animate) {
+            list.children().eq(position +2).remove();
+            lis = list.children().not('.clone');
+            listLiJs = list[0].children; // vanilla js object
             // remove li at position with/without siblings reposition animation
             // call setStyles
         }

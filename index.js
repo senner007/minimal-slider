@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {
     Slider
-} from './src/Slider';
+} from './src/slider';
 
 
 var isTouch = (function is_touch_device() {
@@ -18,7 +18,7 @@ var eClick = isTouch ? 'touchstart' : isPointer ? 'pointerdown' : 'click'
 //      sliderFullPage.moveTo(param);
 //  })
 
-// vanilla js event dispatch
+// vanilla js event listener
 document.querySelector('.margin-border ul').addEventListener('moveEnd', function (e) {
     console.log('moveend' + " - event fired on page: " + e.detail + "!")
     sliderFullPage.moveTo(e.detail);
@@ -35,6 +35,10 @@ var sliderMarginBorder = Slider({
     infiniteScroll: true,
     touchDrag: true
 });
+// add elem at position
+sliderMarginBorder.add($("<li>Pink Panther</li>"), 0);
+// remove at position
+sliderMarginBorder.remove(0);
 
 
 // moveLeft
