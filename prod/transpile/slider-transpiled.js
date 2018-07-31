@@ -42,7 +42,7 @@ var Slider = function IIFE() {
         };
     };
 
-    var Styler = function Styler(list, infiniteScroll, elems) {
+    var Layout = function Layout(list, infiniteScroll) {
 
         var liOuter,
             lis = list.children().not('.clone'),
@@ -60,7 +60,8 @@ var Slider = function IIFE() {
             get liOuter() {
                 return Math.round(liOuter);
             },
-            setStyles: function setStyles() {
+            setStyles: function setStyles(elems) {
+
                 var ulParentwidth = Math.round(list.parent().outerWidth(true));
                 // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
                 if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
@@ -130,11 +131,25 @@ var Slider = function IIFE() {
 
                     list.prepend(lastClone).prepend(nextLastClone).append(firstClone).append(secondClone);
                 }
+            },
+            add: function add(elem, position, animate) {
+                list.children().eq(position + 2).after(elem);
+                lis = list.children().not('.clone');
+                listLiJs = list[0].children; // vanilla js object
+                // add li at position with/without siblings reposition animation
+                // call setStyles
+            },
+            remove: function remove(position, animate) {
+                list.children().eq(position + 2).remove();
+                lis = list.children().not('.clone');
+                listLiJs = list[0].children; // vanilla js object
+                // remove li at position with/without siblings reposition animation
+                // call setStyles
             }
         };
     };
 
-    var TouchDrag = function TouchDrag(list, mover, styles) {
+    var TouchDrag = function TouchDrag(list, mover, layout) {
 
         // determine touch and pointer support
         var isTouch = function is_touch_device() {
@@ -170,13 +185,13 @@ var Slider = function IIFE() {
                 var diff = Math.abs(mover.transitionState - startTransition);
                 if (diff == 0) return;
                 // if move more than half the width of an li
-                if (diff > styles.liOuter / 2) {
+                if (diff > layout.liOuter / 2) {
                     // if moved right
                     if (mover.transitionState > startTransition) {
-                        mover.jumpMove(+1, styles.liOuter - diff);
+                        mover.jumpMove(+1, layout.liOuter - diff);
                         // if moved left
                     } else {
-                        mover.jumpMove(-1, styles.liOuter - diff);
+                        mover.jumpMove(-1, layout.liOuter - diff);
                     }
                     // else bounce back 
                 } else {
@@ -202,15 +217,15 @@ var Slider = function IIFE() {
             }));
         });
 
-        var styles = Styler(list, infiniteScroll, elems);
-        styles.setStyles();
+        var layout = Layout(list, infiniteScroll);
+        layout.setStyles(elems);
 
         mover.jumpMove = function (direction, distance) {
             var _this = this;
 
             distance = distance * direction;
             var jumpPoint = direction < 0 ? elems : 1;
-            var jumpDistance = styles.liOuter * elems * -direction;
+            var jumpDistance = layout.liOuter * elems * -direction;
             if (state === jumpPoint && infiniteScroll) {
                 state = jumpPoint === 1 ? elems : 1;
                 this.moveMe(jumpDistance, "0s", function () {
@@ -226,14 +241,17 @@ var Slider = function IIFE() {
             }
         };
 
-        if (o.touchDrag) TouchDrag(list, mover, styles);
+        if (o.touchDrag) TouchDrag(list, mover, layout);
 
         return {
+            _getTransformState: function _getTransformState() {
+                return mover.transitionState;
+            },
             moveLeft: function moveLeft() {
-                mover.jumpMove(1, styles.liOuter);
+                mover.jumpMove(1, layout.liOuter);
             },
             moveRight: function moveRight() {
-                mover.jumpMove(-1, styles.liOuter);
+                mover.jumpMove(-1, layout.liOuter);
             },
             getState: function getState() {
                 console.log(state);
@@ -241,22 +259,28 @@ var Slider = function IIFE() {
             },
             moveTo: function moveTo(num) {
                 if (num < 1 || num > elems || !Number.isInteger(num)) return;
-                mover.moveMe(styles.liOuter * (state - num));
+                mover.moveMe(layout.liOuter * (state - num));
                 state = num;
             },
             reCalculate: function reCalculate() {
                 // throttle me!;
-                styles.setStyles();
+                layout.setStyles(elems);
                 this.reset();
             },
             reset: function reset() {
                 mover.moveMe(-mover.transitionState);
                 state = 1;
             },
-            _getTransformState: function _getTransformState() {
-                return mover.transitionState;
+            add: function add(elem, position) {
+                elems++;
+                layout.add(elem, position);
+                layout.setStyles(elems);
+            },
+            remove: function remove(position) {
+                elems--;
+                layout.remove(position);
+                layout.setStyles(elems);
             }
-
         };
     };
 }();
