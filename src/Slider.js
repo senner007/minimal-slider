@@ -74,7 +74,6 @@ export const Slider = function (o) {
         reset: function () {
             mover.moveMe(-mover.transitionState);
             state = 1;
-
         },
         add : function (elem, position) {
             layout.addRemove(position, elem, ++elems);

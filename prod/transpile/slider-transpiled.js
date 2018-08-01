@@ -45,7 +45,7 @@ var Slider = function IIFE() {
     var Layout = function Layout(list, infiniteScroll) {
 
         var liOuter,
-            lis = list.children().not('.clone'),
+            minWidth = parseInt(list.find('li').css('min-width')),
             listLiJs = list[0].children; // vanilla js object
 
         // hack to retrieve css set unit value(%|px)
@@ -64,10 +64,10 @@ var Slider = function IIFE() {
 
                 var ulParentwidth = Math.round(list.parent().outerWidth(true));
                 // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
-                if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
+                if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > minWidth) {
                     liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth);
                 } else {
-                    liOuter = parseInt(lis.outerWidth(true));
+                    liOuter = parseInt(list.find('li').outerWidth(true));
                 }
 
                 (function () {
@@ -83,7 +83,7 @@ var Slider = function IIFE() {
 
                 // append clones to appear infinite
                 if (infiniteScroll) {
-                    //  list[0].querySelectorAll('.clone') remove 
+                    //  list[0].querySelectorAll('.clone') remove
                     // Array.prototype.forEach.call(list[0].querySelectorAll('.clone'), function (node) {
                     //     node.parentNode.removeChild(node);
                     // });
@@ -112,39 +112,21 @@ var Slider = function IIFE() {
                         }
                     }
 
-                    var firstClone = listLiJs[0].cloneNode(true);
-                    var secondClone = listLiJs[1].cloneNode(true);
-                    var lastClone = listLiJs[elems - 1].cloneNode(true);
-                    var nextLastClone = listLiJs[elems - 2].cloneNode(true);
-
-                    firstClone.style.left = liOuter * elems + (ulParentwidth / 2 - liOuter / 2) + "px";
-                    firstClone.classList.add('clone');
-
-                    secondClone.style.left = liOuter * (elems + 1) + (ulParentwidth / 2 - liOuter / 2) + "px";
-                    secondClone.classList.add('clone');
-
-                    lastClone.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter + "px";
-                    lastClone.classList.add('clone');
-
-                    nextLastClone.style.left = ulParentwidth / 2 - liOuter / 2 - liOuter * 2 + "px";
-                    nextLastClone.classList.add('clone');
-
-                    list.prepend(lastClone).prepend(nextLastClone).append(firstClone).append(secondClone);
+                    [listLiJs[0].cloneNode(true), listLiJs[1].cloneNode(true), listLiJs[elems - 1].cloneNode(true), listLiJs[elems - 2].cloneNode(true)].forEach(function (c, i) {
+                        c.classList.add('clone');
+                        if (i <= 1) {
+                            list.append(c);
+                        } else {
+                            list.prepend(c);
+                        }
+                        c.style.left = parseInt(c.style.left) + elems * (i <= 1 ? liOuter : -liOuter) + "px";
+                    });
                 }
             },
-            add: function add(elem, position, animate) {
-                list.children().eq(position + 2).after(elem);
-                lis = list.children().not('.clone');
-                listLiJs = list[0].children; // vanilla js object
-                // add li at position with/without siblings reposition animation
-                // call setStyles
-            },
-            remove: function remove(position, animate) {
-                list.children().eq(position + 2).remove();
-                lis = list.children().not('.clone');
-                listLiJs = list[0].children; // vanilla js object
-                // remove li at position with/without siblings reposition animation
-                // call setStyles
+            addRemove: function addRemove(position, elem, elems) {
+                var liPos = list.children().eq(infiniteScroll ? position + 2 : position);
+                elem ? liPos.after(elem) : liPos.remove();
+                this.setStyles(elems);
             }
         };
     };
@@ -272,14 +254,10 @@ var Slider = function IIFE() {
                 state = 1;
             },
             add: function add(elem, position) {
-                elems++;
-                layout.add(elem, position);
-                layout.setStyles(elems);
+                layout.addRemove(position, elem, ++elems);
             },
             remove: function remove(position) {
-                elems--;
-                layout.remove(position);
-                layout.setStyles(elems);
+                layout.addRemove(position, false, --elems);
             }
         };
     };
