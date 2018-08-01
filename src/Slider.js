@@ -77,14 +77,10 @@ export const Slider = function (o) {
 
         },
         add : function (elem, position) {
-            elems++;
-            layout.add(elem, position);
-            layout.setStyles(elems)
+            layout.addRemove(position, elem, ++elems);
         },
         remove : function (position) {
-            elems--;
-            layout.remove(position);
-            layout.setStyles(elems)
+            layout.addRemove(position, false, --elems);         
         }
     }
 }

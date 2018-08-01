@@ -1,8 +1,8 @@
-import $ from 'jquery';
 
 export const Layout = function (list, infiniteScroll) {
 
     var liOuter,
+        minWidth = parseInt(list.find('li').css('min-width')),
         listLiJs = list[0].children; // vanilla js object
 
     // hack to retrieve css set unit value(%|px)
@@ -18,14 +18,13 @@ export const Layout = function (list, infiniteScroll) {
             return Math.round(liOuter);
         },
         setStyles: function (elems) {
-
-            var ulParentwidth = Math.round(list.parent().outerWidth(true)),
-            lis = list.children().not('.clone');
+     
+            var ulParentwidth = Math.round(list.parent().outerWidth(true));
             // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
-            if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > parseInt(lis.css('min-width'))) {
+            if (origStyleWidth.indexOf('%') != -1 && ulParentwidth / 2 > minWidth) {
                 liOuter = parseInt(origStyleWidth.replace('%', '') / 100 * ulParentwidth);
             } else {
-                liOuter = parseInt(lis.outerWidth(true));
+                liOuter = parseInt(list.find('li').outerWidth(true));
             }
 
             (function (index = 0) {
@@ -62,14 +61,10 @@ export const Layout = function (list, infiniteScroll) {
                 });
             }
         },
-        add: function (elem, position, animate) {
-            list.children().eq(position +2).after(elem);
-            // add li at position with/without siblings reposition animation
-
-        },
-        remove: function (position, animate) {
-            list.children().eq(infiniteScroll ? position+2 : position).remove();
-            // remove li at position with/without siblings reposition animation
+        addRemove : function (position, elem, elems) {
+            var liPos =  list.children().eq(infiniteScroll ? position+2 : position);
+            elem ? liPos.after(elem) : liPos.remove();
+            this.setStyles(elems);
         }
     }
 }
