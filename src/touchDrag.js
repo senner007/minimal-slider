@@ -39,13 +39,7 @@ export const TouchDrag = function (list, mover, layout) {
             if (diff == 0) return;
             // if move more than half the width of an li
             if (diff > layout.liOuter/2) {
-                 // if moved right
-                 if (mover.transitionState > startTransition) {   
-                     mover.jumpMove(+1, layout.liOuter - diff)
-                 // if moved left
-                 } else {
-                     mover.jumpMove(-1, layout.liOuter - diff)
-                 }
+                 mover.jumpMove(mover.transitionState > startTransition ? 1 : -1)(layout.liOuter - diff)
             // else bounce back 
             } else {
                 mover.moveMe(mover.transitionState > startTransition ? -diff : diff)

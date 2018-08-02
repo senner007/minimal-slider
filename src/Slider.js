@@ -26,24 +26,41 @@ export const Slider = function (o) {
     var layout = Layout(list, infiniteScroll);
     layout.setStyles(elems);
 
-  
-    mover.jumpMove = function (direction, distance) {
-        distance = distance * direction;
-        var jumpPoint = direction < 0 ? elems : 1;
-        var jumpDistance = layout.liOuter * elems * -direction;
-        if (state === jumpPoint && infiniteScroll) {
-            state = jumpPoint === 1 ? elems : 1;
-            this.moveMe(jumpDistance, "0s", () => this.moveMe(distance));
-        } else if (state === jumpPoint) {
-            // bounce back at end points if no infinte scroll
-            this.moveMe(jumpDistance/elems + distance);
+    mover.jumpMove = function (direction) {
+        var isJumpPoint = state === (direction < 0 ? elems : 1);
+        if (isJumpPoint && infiniteScroll) {
+            state = state === 1 ? elems : 1
+        } else if (!isJumpPoint){
+            state = state -direction;
         }
-        else {
-            this.moveMe(distance);
-            // determine direction based on direction param
-            state = direction < 0 ? state + 1 : state - 1;
+
+        return function (distance, fn = (dist) => dist * direction) {
+            if (isJumpPoint && infiniteScroll) { 
+                mover.moveMe(-fn(layout.liOuter * elems), "0s", () => mover.moveMe(fn(distance)));
+            } else  {
+                // bounce back at end points if no infinte scroll or move left/right
+                mover.moveMe(isJumpPoint ? -fn(layout.liOuter - distance) : fn(distance));
+            }
         }
     }
+
+    // mover.left = (dist) => dist * -1;
+    // mover.right = (dist) => dist * 1;
+    // mover.jumpMove = function (fn, distance) {
+    //     var isJumpPoint = state === (fn(1) > 0 ? elems : 1);
+    //     if (isJumpPoint && infiniteScroll) { 
+    //         this.moveMe(fn(layout.liOuter * elems), "0s", () => this.moveMe(-fn(distance)));
+    //     } else if (isJumpPoint) {
+    //         // bounce back at end points if no infinte scroll
+    //         this.moveMe(fn(layout.liOuter - distance));
+    //         return;
+    //     }
+    //     else {
+    //         console.log(isJumpPoint)
+    //         this.moveMe(-fn(distance));
+    //     }
+    //     state = isJumpPoint && infiniteScroll ? state === 1 ? elems : 1 : state + fn(1);
+    // }
 
 
     if (o.touchDrag) TouchDrag(list, mover, layout);
@@ -53,10 +70,10 @@ export const Slider = function (o) {
             return mover.transitionState
         },
         moveLeft: function () {
-            mover.jumpMove(1, layout.liOuter)
+            mover.jumpMove(1)(layout.liOuter);
         },
         moveRight: function () {
-            mover.jumpMove(-1, layout.liOuter)
+            mover.jumpMove(-1)(layout.liOuter);
         },
         getState: function () {
             console.log(state)
