@@ -30,3 +30,8 @@ minimal slider
 
  ### Production use setup example:
   - download index.html, minimal.css, slider-transpiled.min.js in prod folder
+
+ ### TODO:
+  - fix IE 11 support:
+    1. isInteger
+    2. dispatch event
