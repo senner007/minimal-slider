@@ -14,7 +14,7 @@
     ]
   },
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery-slim": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

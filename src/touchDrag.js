@@ -1,4 +1,3 @@
-import $ from 'jquery';
 export const TouchDrag = function (list, mover, layout) {
    
     // determine touch and pointer support
@@ -16,11 +15,12 @@ export const TouchDrag = function (list, mover, layout) {
     var lastPageX,
         startTransition;
 
-    list.parent().on(eStart, function (e) {
+    list.parent()[0].addEventListener(eStart, function (e) {
         e.preventDefault();
         startTransition = mover.transitionState;
         lastPageX = e.pageX;
-        $(window).on(eMove, onmove).on(eEnd, onup);
+        window.addEventListener(eMove, onmove)
+        window.addEventListener(eEnd, onup);
 
         function onmove(e) {
             e.preventDefault();
@@ -33,7 +33,8 @@ export const TouchDrag = function (list, mover, layout) {
         }
 
         function onup() {
-            $(window).off(eMove, onmove).off(eEnd, onup)
+            window.removeEventListener(eMove, onmove);
+            window.removeEventListener(eEnd, onup);
             // diff : the difference between the start transition state and the curent transition state
             var diff = Math.abs(mover.transitionState - startTransition);
             if (diff == 0) return;

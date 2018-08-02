@@ -1,4 +1,3 @@
-
 export const Layout = function (list, infiniteScroll) {
 
     var liOuter,
