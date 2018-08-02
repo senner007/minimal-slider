@@ -3,7 +3,6 @@ import {
     Slider
 } from './src/slider';
 
-
 var isTouch = (function is_touch_device() {
     return (('ontouchstart' in window) ||
         (navigator.MaxTouchPoints > 0) ||
@@ -40,11 +39,11 @@ sliderMarginBorder.add($("<li>Pink Panther</li>"), 0);
 // remove at position
 sliderMarginBorder.remove(0);
 
-
 // moveLeft
 document.querySelector(".prev").addEventListener(eClick, function (e) {
     e.preventDefault();
     e.stopPropagation();
+    if (e.pointerType === 'mouse' && e.which != 1) return;
     sliderMarginBorder.moveLeft();
 })
 
@@ -52,8 +51,20 @@ document.querySelector(".prev").addEventListener(eClick, function (e) {
 document.querySelector(".next").addEventListener(eClick, function (e) {
     e.preventDefault();
     e.stopPropagation();
+    if (e.pointerType === 'mouse' && e.which != 1) return;
     sliderMarginBorder.moveRight();
 })
+
+// mousewheel event
+if ( eClick === 'click' || eClick === 'pointerdown') {
+    $('.margin-border')[0].addEventListener("wheel", function (e) {
+        if (e.wheelDelta > 0) sliderMarginBorder.moveLeft()
+        else {  sliderMarginBorder.moveRight() }
+    }, {
+        capture: true,
+        passive: true
+      });
+}
 
 //moveTo
 window.addEventListener('keyup', function (e) {
