@@ -44,25 +44,6 @@ export const Slider = function (o) {
         }
     }
 
-    // mover.left = (dist) => dist * -1;
-    // mover.right = (dist) => dist * 1;
-    // mover.jumpMove = function (fn, distance) {
-    //     var isJumpPoint = state === (fn(1) > 0 ? elems : 1);
-    //     if (isJumpPoint && infiniteScroll) { 
-    //         this.moveMe(fn(layout.liOuter * elems), "0s", () => this.moveMe(-fn(distance)));
-    //     } else if (isJumpPoint) {
-    //         // bounce back at end points if no infinte scroll
-    //         this.moveMe(fn(layout.liOuter - distance));
-    //         return;
-    //     }
-    //     else {
-    //         console.log(isJumpPoint)
-    //         this.moveMe(-fn(distance));
-    //     }
-    //     state = isJumpPoint && infiniteScroll ? state === 1 ? elems : 1 : state + fn(1);
-    // }
-
-
     if (o.touchDrag) TouchDrag(list, mover, layout);
    
     return {  
