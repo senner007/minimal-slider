@@ -2,7 +2,7 @@
 import {
     Slider
 } from '../src/Slider';
-import $ from 'jquery';
+import $ from 'jquery-slim';
 
 function createDOM(width = '400px', marginLeft = '0px', marginRight = '0px') {
 
