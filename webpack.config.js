@@ -19,7 +19,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            babelrc: false, // don't look in .babelrc file ( used by parcel.js )
+            babelrc: false, // don't look in .babelrc file ( used by parcel and jest )
             presets: ['@babel/preset-env']
           }
         }
