@@ -1,19 +1,10 @@
-import {
-    Mover
-} from './mover';
-import {
-    Layout
-} from './layout';
-import {
-    TouchDrag
-} from './touchDrag';
+import Mover from './mover';
+import Layout from './layout';
+import TouchDrag from './touchDrag';
+import setPolyFills from './polyfills';
+import 'babel-polyfill';
 
-
- import setPolyFills from './polyfills';
-
- setPolyFills();
-
- import 'babel-polyfill'
+setPolyFills();
 
 export const Slider = function (o) {
     var state = 1,
@@ -23,12 +14,12 @@ export const Slider = function (o) {
         speed = listJs.style.transitionDuration, // get css transition duration
         elems = list.children().length; // number of lis
 
-    var mover = Mover(listJs, speed,  function () {
+    var mover = Mover(listJs, speed, function () {
         listJs.dispatchEvent(new CustomEvent('moveEnd', {
             detail: state
         }));
     })
-  
+
     var layout = Layout(list, infiniteScroll);
     layout.setStyles(elems);
 
@@ -36,14 +27,14 @@ export const Slider = function (o) {
         var isJumpPoint = state === (direction < 0 ? elems : 1);
         if (isJumpPoint && infiniteScroll) {
             state = state === 1 ? elems : 1
-        } else if (!isJumpPoint){
-            state = state -direction;
+        } else if (!isJumpPoint) {
+            state = state - direction;
         }
 
         return function (distance, fn = (dist) => dist * direction) {
-            if (isJumpPoint && infiniteScroll) { 
+            if (isJumpPoint && infiniteScroll) {
                 mover.moveMe(-fn(layout.liOuter * elems), "0s", () => mover.moveMe(fn(distance)));
-            } else  {
+            } else {
                 // bounce back at end points if no infinte scroll or move left/right
                 mover.moveMe(isJumpPoint ? -fn(layout.liOuter - distance) : fn(distance));
             }
@@ -51,9 +42,9 @@ export const Slider = function (o) {
     }
 
     if (o.touchDrag) TouchDrag(list, mover, layout);
-   
-    return {  
-        _getTransformState : function () {
+
+    return {
+        _getTransformState: function () {
             return mover.transitionState
         },
         moveLeft: function () {
@@ -79,11 +70,11 @@ export const Slider = function (o) {
             mover.moveMe(-mover.transitionState);
             state = 1;
         },
-        add : function (elem, position) {
+        add: function (elem, position) {
             layout.addRemove(position, elem, ++elems);
         },
-        remove : function (position) {
-            layout.addRemove(position, false, --elems);         
+        remove: function (position) {
+            layout.addRemove(position, false, --elems);
         }
     }
 }

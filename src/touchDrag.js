@@ -1,4 +1,4 @@
-export const TouchDrag = function (list, mover, layout) {
+export default function TouchDrag(list, mover, layout) {
    
     // determine touch and pointer support
     var isTouch = (function is_touch_device() {

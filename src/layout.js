@@ -1,4 +1,4 @@
-export const Layout = function (list, infiniteScroll) {
+export default function Layout (list, infiniteScroll) {
 
     var liOuter,
         minWidth = parseInt(list.find('li').css('min-width')),

@@ -1,4 +1,4 @@
-export const Mover = function (listJs, speed, moveEndCallback) {
+export default function Mover (listJs, speed, moveEndCallback) {
     var isDormant = true; // only fire 1 moveEnd event after multiple repeated move calls
     var transitionState = 0;
     var prevSpeed;
