@@ -55,14 +55,19 @@ document.querySelector(".next").addEventListener(eClick, function (e) {
     sliderMarginBorder.moveRight();
 })
 
+
 // mousewheel event
 if ( eClick === 'click' || eClick === 'pointerdown') {
     $('.margin-border')[0].addEventListener("wheel", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        document.body.style.overflowY = "hidden";
         if (e.deltaY < 0) sliderMarginBorder.moveLeft()
         else {  sliderMarginBorder.moveRight() }
+        document.body.style.overflowY = "scroll";
     }, {
-        capture: true,
-        passive: true
+        // capture: true,
+        // passive: true
       });
 }
 
