@@ -41,8 +41,17 @@ export default function Layout (list, infiniteScroll) {
                 // Array.prototype.forEach.call(list[0].querySelectorAll('.clone'), function (node) {
                 //     node.parentNode.removeChild(node);
                 // });
-                for (let li of list[0].querySelectorAll('.clone')) {
-                    li.remove();
+
+
+                // this causes babel to inject symbol and iterator code which requires import 'babel-polyfill' for ie 
+                // for (let li of list[0].querySelectorAll('.clone')) {
+                //     li.remove();
+                // }
+
+                var clones = document.getElementsByClassName('clone');
+
+                while(clones[0]) {
+                    clones[0].parentNode.removeChild(clones[0]);
                 }
 
                 [listLiJs[0].cloneNode(true),

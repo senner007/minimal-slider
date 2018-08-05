@@ -2,7 +2,6 @@ import Mover from './mover';
 import Layout from './layout';
 import TouchDrag from './touchDrag';
 import setPolyFills from './polyfills';
-import 'babel-polyfill';
 
 setPolyFills();
 
