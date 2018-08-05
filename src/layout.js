@@ -44,6 +44,9 @@ export default function Layout (list, infiniteScroll) {
 
 
                 // this causes babel to inject symbol and iterator code which requires import 'babel-polyfill' for ie 
+                // https://babeljs.io/docs/en/babel-plugin-transform-es2015-for-of
+                // https://daverupert.com/2017/10/for-of-loops-are-bad/
+                // TODO : add to es-lint : no-for-of-loops
                 // for (let li of list[0].querySelectorAll('.clone')) {
                 //     li.remove();
                 // }
