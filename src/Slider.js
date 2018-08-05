@@ -9,6 +9,10 @@ import {
 } from './touchDrag';
  import '../css.css';
 
+ import setPolyFills from './polyfills';
+
+ setPolyFills();
+
 export const Slider = function (o) {
     var state = 1,
         list = o.ul,
