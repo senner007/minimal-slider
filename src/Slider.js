@@ -13,6 +13,8 @@ import {
 
  setPolyFills();
 
+ import 'babel-polyfill'
+
 export const Slider = function (o) {
     var state = 1,
         list = o.ul,
