@@ -3,6 +3,8 @@ import {
     Slider
 } from './src/slider';
 
+import './css.css';
+
 var isTouch = (function is_touch_device() {
     return (('ontouchstart' in window) ||
         (navigator.MaxTouchPoints > 0) ||

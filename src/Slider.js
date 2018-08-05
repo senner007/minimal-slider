@@ -7,7 +7,7 @@ import {
 import {
     TouchDrag
 } from './touchDrag';
- import '../css.css';
+
 
  import setPolyFills from './polyfills';
 
