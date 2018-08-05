@@ -24,7 +24,7 @@ minimal slider
 
 ### Test
 - npm run test-jsdom
-- npm run test-puppet (test slider running at <code>http://localhost:1234</code>)
+- npm run test-puppet (test slider running at <code>http://<li></li>localhost:1234</code>)
 
 ### Fix
  - If parcel complains that functions are not functions you can:
