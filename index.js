@@ -58,7 +58,7 @@ document.querySelector(".next").addEventListener(eClick, function (e) {
 // mousewheel event
 if ( eClick === 'click' || eClick === 'pointerdown') {
     $('.margin-border')[0].addEventListener("wheel", function (e) {
-        if (e.wheelDelta > 0) sliderMarginBorder.moveLeft()
+        if (e.deltaY < 0) sliderMarginBorder.moveLeft()
         else {  sliderMarginBorder.moveRight() }
     }, {
         capture: true,
