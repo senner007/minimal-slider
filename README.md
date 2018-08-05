@@ -31,7 +31,7 @@ minimal slider
  - 2. repeat the install process
 
  ### Production use setup example:
-  - download index.html, minimal.css, slider-transpiled.min.js in prod folder
+  - see prod folder
 
  ### Browser support:
   - IE 10+
