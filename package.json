@@ -17,7 +17,8 @@
     "@babel/core": "^7.0.0-beta.56",
     "@babel/preset-env": "^7.0.0-beta.56",
     "babel-loader": "^8.0.0-beta.4",
-    "jquery-slim": "^3.0.0"
+    "jquery-slim": "^3.0.0",
+    "puppeteer": "^1.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,7 +30,8 @@
     "webpack-cli": "^3.1.0"
   },
   "scripts": {
-    "test": "jest",
+    "test-jsdom": "jest test/Slider.jsdom.test.js",
+    "test-puppet": "jest test/Slider.puppeteer.test.js",
     "dev": "parcel index.html",
     "transpile": "./node_modules/.bin/babel prod/slider-es2015.js --out-file prod/transpile/slider-transpiled.js",
     "uglify": "uglifyjs prod/transpile/slider-transpiled.js --compress --mangle --output prod/slider-transpiled.min.js",
