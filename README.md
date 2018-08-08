@@ -1,7 +1,7 @@
 # minimal-slider
 minimal slider
 
-[Demo](http://www.nielshtg.dk/minimal-slider/)
+[Demo](https://www.nielshtg.dk/minimal-slider/)
 
 <!-- ### Install dependencies manuallly:
 - npm install jquery
