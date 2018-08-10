@@ -37,7 +37,7 @@ ul {
     list-style: none;
     transform: translateX(0px);
     will-change: transform;
-    -webkit-backface-visibility: hidden;
+    
 }
 
 .full-page ul {
@@ -62,6 +62,7 @@ li {
 
 .full-page li {
     width: 100%;
+    -webkit-transform:translate3d(0,0,0);
 }
 
 .margin-border li {
