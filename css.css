@@ -37,6 +37,7 @@ ul {
     list-style: none;
     transform: translateX(0px);
     will-change: transform;
+    -webkit-backface-visibility: hidden;
 }
 
 .full-page ul {
