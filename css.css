@@ -13,13 +13,15 @@
 
 .full-page {
     /* width: 100%; */
-    height: 200px;
+
+    height: 180px;
     margin: auto;
+    margin-top: 15px;
 }
 
 .margin-border {
     /* width : 100%; */
-    height: 250px;
+    height: 180px;
     margin: auto;
 }
 
@@ -46,15 +48,15 @@ ul {
 }
 
 li {
-    height: 200px;
+    height: 90%;
     background-color: lightseagreen;
     color: white;
-    font-size: 2.5vw;
+
     text-align: center;
     position: absolute;
     vertical-align: middle;
-    line-height: 200px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    line-height: 165px;
+    font-family: 'Fontdiner Swanky';font-size: 26px;
 }
 
 .full-page li {
@@ -63,18 +65,27 @@ li {
 
 .margin-border li {
     border: 2px solid darkslategray;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-left: 15px;
     margin-right: 15px;
     width: 70%;
-    min-width: 100px;
+    min-width: 270px;
+}
+
+.margin-border li:nth-child(3) {
+    background-color: pink;
+    color: black;
+}
+.margin-border li:nth-child(8) {
+    background-color: pink;
+    color: black;
 }
 
 #buttonStyle {
     position: absolute;
     width: 50%;
     z-index: 2;
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 button {
@@ -99,4 +110,10 @@ button {
 .prev {
     float: left;
     margin-left: -25px;
+}
+
+@media only screen and (max-width: 1400px) {
+    #container, #buttonStyle {
+        width: 80%;
+    }
 }
