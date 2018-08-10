@@ -12,6 +12,23 @@ export default function Layout (list, infiniteScroll) {
 
     var marginBorder = parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight) + parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth);
 
+    function defineClones (lisElems) {
+        return function (n) {
+            n = n.map((c) => {
+                var clone = listLiJs[c -1].cloneNode(true)
+                clone.classList.add('clone');    
+                return clone;           
+            });
+
+            return function (addfn, position) {
+                n.forEach((clone) => {          
+                    list[addfn](clone);                          
+                    clone.style.left = parseInt(clone.style.left) + lisElems * position+ "px";
+                 });
+            }
+        }
+    }
+
     return {
         get liOuter() {
             return Math.round(liOuter);
@@ -50,26 +67,17 @@ export default function Layout (list, infiniteScroll) {
                 // for (let li of list[0].querySelectorAll('.clone')) {
                 //     li.remove();
                 // }
+                (function deleteClones () {
+                    var clones = document.getElementsByClassName('clone');
 
-                var clones = document.getElementsByClassName('clone');
-
-                while(clones[0]) {
-                    clones[0].parentNode.removeChild(clones[0]);
-                }
-
-                [listLiJs[0].cloneNode(true),
-                listLiJs[1].cloneNode(true),
-                listLiJs[elems - 1].cloneNode(true),
-                listLiJs[elems - 2].cloneNode(true)]
-                .forEach(function (c, i) {
-                    c.classList.add('clone');
-                    if (i <= 1 ) {                       
-                        list.append(c);
-                    } else {                     
-                        list.prepend(c);                   
+                    while(clones[0]) {
+                        clones[0].parentNode.removeChild(clones[0]);
                     }
-                    c.style.left = parseInt(c.style.left) + elems * (i <= 1 ? liOuter: -liOuter)+ "px";
-                });
+                }());
+            
+                var addClones = defineClones(elems);
+                addClones([1,2])('append',liOuter);
+                addClones([elems, elems -1])('prepend',-liOuter)
             }
         },
         addRemove : function (position, elem, elems) {
