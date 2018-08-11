@@ -1,6 +1,5 @@
 import {cloneCurry, getOrigStyles, outerWidth} from './layoutHelpers';
 
-
 export default function Layout (listLiJs, infiniteScroll) {
 
     var liOuter,

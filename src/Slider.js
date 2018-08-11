@@ -31,7 +31,7 @@ export const Slider = function (o) {
             } else if (!isJumpPoint) {
                 return state - direction;
             }
-        }());
+        }()) || state;
         
 
         return function (distance) {
@@ -52,6 +52,7 @@ export const Slider = function (o) {
             return mover.transitionState
         },
         moveLeft: function () {
+      
             mover.jumpMove(1)(layout.liOuter);
         },
         moveRight: function () {
@@ -63,6 +64,7 @@ export const Slider = function (o) {
         },
         moveTo: function (num) {
             if (num < 1 || num > elems || !Number.isInteger(num)) return;
+            console.log(num)
             mover.moveMe(layout.liOuter * (state - num))
             state = num;
         },
