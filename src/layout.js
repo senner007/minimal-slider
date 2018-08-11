@@ -1,32 +1,29 @@
-import {cloneCurry, getOrigStyles} from './layoutHelpers';
+import {cloneCurry, getOrigStyles, outerWidth} from './layoutHelpers';
 
-export default function Layout (list, infiniteScroll) {
+
+export default function Layout (listLiJs, infiniteScroll) {
 
     var liOuter,
-        minWidth = parseInt(list.find('li').css('min-width')),
-        listLiJs = list[0].children; // vanilla js object
-
-    var orig = getOrigStyles(listLiJs[0]);
+        orig = getOrigStyles(listLiJs[0]);
 
     return {
         get liOuter() {
-            return Math.round(liOuter);
+            return liOuter;
         },
         setStyles: function () {
      
-            var ulParentwidth = Math.round(list.parent().outerWidth(true));
-            // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
+            var ulParentwidth = outerWidth(listLiJs[0].parentNode);
 
+            // scale according to width percentage if ulParentwidth is above 2 times the width of the li min-width
             liOuter = (function () {
-                if (orig.width.indexOf('%') != -1 && ulParentwidth / 2 > minWidth) {
+                if (orig.width.indexOf('%') != -1 && ulParentwidth / 2 > orig.minWidth) {
                     return parseInt(orig.width.replace('%', '') / 100 * ulParentwidth);
                 }          
-                return parseInt(list.find('li').outerWidth(true));
+                return outerWidth(listLiJs[0]);
             }());
 
-          
-            (function (index = 0) {
-                Array.from(listLiJs).forEach((v,i) => {
+            (function setLisStyles (index = 0) {
+                listLiJs.toArray().forEach((v) => {
                      if (!v.classList.contains('clone')) {
                         v.style.width = liOuter - orig.marginBorder + 'px';
                         v.style.left =  liOuter * index++ + (ulParentwidth / 2 - (liOuter / 2)) + 'px';
@@ -46,7 +43,7 @@ export default function Layout (list, infiniteScroll) {
               
 
                 (function deleteClones () {
-                    Array.from(listLiJs).forEach(v => {
+                    listLiJs.toArray().forEach(v => {
                         if (v.classList.contains('clone')) { 
                             v.parentNode.removeChild(v)
                         }
@@ -62,8 +59,8 @@ export default function Layout (list, infiniteScroll) {
             }
         },
         addRemove : function (position, elem) {
-            var liPos =  list.children().eq(infiniteScroll ? position+2 : position);
-            elem ? liPos.after(elem) : liPos.remove();
+            var liPos =  listLiJs[(infiniteScroll ? position + 2 : position)];
+            elem ?  listLiJs[0].parentNode.insertBefore(elem, liPos) : liPos.parentNode.removeChild(liPos);
             this.setStyles();
         }
     }

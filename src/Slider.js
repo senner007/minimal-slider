@@ -19,7 +19,7 @@ export const Slider = function (o) {
         }));
     })
 
-    var layout = Layout(list, infiniteScroll);
+    var layout = Layout(listJs.children, infiniteScroll);
     layout.setStyles();
 
     mover.jumpMove = function (direction) {
@@ -75,7 +75,9 @@ export const Slider = function (o) {
             state = 1;
         },
         add: function (elem, position) {
-            layout.addRemove(position, elem, ++elems);
+            var newItem = document.createElement("LI"); 
+            newItem.appendChild(document.createTextNode(elem));
+            layout.addRemove(position, newItem, ++elems);
         },
         remove: function (position) {
             layout.addRemove(position, false, --elems);

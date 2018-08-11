@@ -37,9 +37,9 @@ var sliderMarginBorder = Slider({
     touchDrag: true
 });
 // add elem at position
-sliderMarginBorder.add($("<li>Pink Panther</li>"), 0);
+sliderMarginBorder.add("Pink Panther", 0);
 // remove at position
-sliderMarginBorder.remove(0);
+sliderMarginBorder.remove(1);
 
 // moveLeft
 document.querySelector(".prev").addEventListener(eClick, function (e) {
