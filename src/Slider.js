@@ -20,7 +20,7 @@ export const Slider = function (o) {
     })
 
     var layout = Layout(listJs.children, infiniteScroll);
-    layout.setStyles();
+    layout.setStyles(true);
 
     mover.jumpMove = function (direction) {
         var isJumpPoint = state === (direction < 0 ? elems : 1);
@@ -68,7 +68,7 @@ export const Slider = function (o) {
             state = num;
         },
         reCalculate: function () { 
-            layout.setStyles();
+            layout.setStyles(true);
             this.reset();
         },
         reset: function () {
