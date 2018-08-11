@@ -20,7 +20,7 @@ export const Slider = function (o) {
     })
 
     var layout = Layout(list, infiniteScroll);
-    layout.setStyles(elems);
+    layout.setStyles();
 
     mover.jumpMove = function (direction) {
         var isJumpPoint = state === (direction < 0 ? elems : 1);
@@ -62,7 +62,7 @@ export const Slider = function (o) {
             state = num;
         },
         reCalculate: function () { // throttle me!;
-            layout.setStyles(elems);
+            layout.setStyles();
             this.reset();
         },
         reset: function () {

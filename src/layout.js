@@ -12,21 +12,19 @@ export default function Layout (list, infiniteScroll) {
 
     var marginBorder = parseInt(origStyle.marginLeft) + parseInt(origStyle.marginRight) + parseInt(origStyle.borderLeftWidth) + parseInt(origStyle.borderRightWidth);
 
-    function defineClones (lisElems) {
-        return function (n) {
-            n = n.map((c) => {
+    function createClones (arr, position) {   
+            return arr.map((c) => {
                 var clone = listLiJs[c -1].cloneNode(true)
                 clone.classList.add('clone');    
+                clone.style.left = parseInt(clone.style.left) + listLiJs.length * position + "px";
                 return clone;           
-            });
+            }); 
+    }
 
-            return function (addfn, position) {
-                n.forEach((clone) => {          
-                    list[addfn](clone);                          
-                    clone.style.left = parseInt(clone.style.left) + lisElems * position+ "px";
-                 });
-            }
-        }
+    function addClones(clones, addfn) {
+        clones.forEach((clone) => {          
+            list[addfn](clone);                                     
+         });
     }
 
     return {
@@ -69,21 +67,20 @@ export default function Layout (list, infiniteScroll) {
                 // }
                 (function deleteClones () {
                     var clones = document.getElementsByClassName('clone');
-
                     while(clones[0]) {
                         clones[0].parentNode.removeChild(clones[0]);
                     }
                 }());
-            
-                var addClones = defineClones(elems);
-                addClones([1,2])('append',liOuter);
-                addClones([elems, elems -1])('prepend',-liOuter)
+                
+                addClones(createClones([1,2], liOuter), 'append');
+                addClones(createClones([listLiJs.length, listLiJs.length -1], -liOuter), 'prepend')
+       
             }
         },
-        addRemove : function (position, elem, elems) {
+        addRemove : function (position, elem) {
             var liPos =  list.children().eq(infiniteScroll ? position+2 : position);
             elem ? liPos.after(elem) : liPos.remove();
-            this.setStyles(elems);
+            this.setStyles();
         }
     }
 }
