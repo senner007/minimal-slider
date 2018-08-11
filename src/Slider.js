@@ -24,13 +24,18 @@ export const Slider = function (o) {
 
     mover.jumpMove = function (direction) {
         var isJumpPoint = state === (direction < 0 ? elems : 1);
-        if (isJumpPoint && infiniteScroll) {
-            state = state === 1 ? elems : 1
-        } else if (!isJumpPoint) {
-            state = state - direction;
-        }
 
-        return function (distance, fn = (dist) => dist * direction) {
+        state = (function () {
+            if (isJumpPoint && infiniteScroll) {
+                return state === 1 ? elems : 1
+            } else if (!isJumpPoint) {
+                return state - direction;
+            }
+        }());
+        
+
+        return function (distance) {
+            var fn = (dist) => dist * direction
             if (isJumpPoint && infiniteScroll) {
                 mover.moveMe(-fn(layout.liOuter * elems), "0s", () => mover.moveMe(fn(distance)));
             } else {
