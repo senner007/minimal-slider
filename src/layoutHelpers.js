@@ -11,7 +11,6 @@ function cloneCurry (elems, list) {
         
         return {
             addClones: function() {
-                console.log(arr)
                 arr.forEach((clone) => list[0].parentNode.appendChild(clone));
             },
             prependClones: function () {
