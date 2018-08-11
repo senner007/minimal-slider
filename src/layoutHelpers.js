@@ -45,7 +45,7 @@ function outerWidth(el) {
 }
 
 HTMLCollection.prototype.toArray = function () {
-    return Array.from(this);
+    return [].slice.call(this)
 };
 
 export {
