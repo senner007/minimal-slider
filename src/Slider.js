@@ -64,11 +64,10 @@ export const Slider = function (o) {
         },
         moveTo: function (num) {
             if (num < 1 || num > elems || !Number.isInteger(num)) return;
-            console.log(num)
             mover.moveMe(layout.liOuter * (state - num))
             state = num;
         },
-        reCalculate: function () { // throttle me!;
+        reCalculate: function () { 
             layout.setStyles();
             this.reset();
         },

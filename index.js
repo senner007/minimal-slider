@@ -36,6 +36,7 @@ var sliderMarginBorder = Slider({
     infiniteScroll: true,
     touchDrag: true
 });
+
 // add elem at position
 sliderMarginBorder.add("Pink Panther", 0);
 // remove at position
