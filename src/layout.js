@@ -19,6 +19,19 @@ export default function Layout (listLiJs, infiniteScroll) {
         }());
     }
 
+    function alignLis (fn, index = 0) {
+        listLiJs.toArray().forEach((v) => {
+             if (!v.classList.contains('clone')) {
+                v.style.width = liOuter - orig.marginBorder + 'px';
+                v.style.left =  liOuter * index++ + (ulWidth / 2 - (liOuter / 2)) + 'px';
+             } else {
+                // remove clones
+                fn(v)
+             }
+        })
+    };
+
+
     return {
         get liOuter() {
             return liOuter;
@@ -27,17 +40,7 @@ export default function Layout (listLiJs, infiniteScroll) {
 
             if (resize) setWidths();
 
-            (function setLisStyles (index = 0) {
-                listLiJs.toArray().forEach((v) => {
-                     if (!v.classList.contains('clone')) {
-                        v.style.width = liOuter - orig.marginBorder + 'px';
-                        v.style.left =  liOuter * index++ + (ulWidth / 2 - (liOuter / 2)) + 'px';
-                     } else {
-                        // remove clones
-                        v.parentNode.removeChild(v)
-                     }
-                })
-            })()
+            alignLis((v) => v.parentNode.removeChild(v));
 
             if (infiniteScroll) {
 
