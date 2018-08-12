@@ -40,7 +40,7 @@ export default function Layout (listLiJs, infiniteScroll) {
 
             if (resize) setWidths();
 
-            alignLis((v) => v.parentNode.removeChild(v));
+            alignLis((clone) => clone.parentNode.removeChild(clone));
 
             if (infiniteScroll) {
 
