@@ -1,4 +1,4 @@
-import $ from 'jquery-slim';
+import $ from 'jquery';
 import {
     Slider
 } from './src/slider';
