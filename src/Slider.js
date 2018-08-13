@@ -6,12 +6,12 @@ import setPolyFills from './polyfills';
 setPolyFills();
 
 export const Slider = function (o) {
+    
     var state = 1,
-        list = o.ul,
         infiniteScroll = o.infiniteScroll,
-        listJs = list[0], // vanilla js object
+        listJs = o.ul, // vanilla js object
         speed = listJs.style.transitionDuration, // get css transition duration
-        elems = list.children().length; // number of lis
+        elems = listJs.children.length; // number of lis
 
     var mover = Mover(listJs, speed, function () {
         listJs.dispatchEvent(new CustomEvent('moveEnd', {
@@ -21,6 +21,7 @@ export const Slider = function (o) {
 
     var layout = Layout(listJs.children, infiniteScroll);
     layout.setStyles(true);
+ 
 
     mover.jumpMove = function (direction) {
         var isJumpPoint = state === (direction < 0 ? elems : 1);
@@ -45,7 +46,7 @@ export const Slider = function (o) {
         }
     }
 
-    if (o.touchDrag) TouchDrag(list, mover, layout);
+    if (o.touchDrag) TouchDrag(listJs, mover, layout);
 
     return {
         _getTransformState: function () {

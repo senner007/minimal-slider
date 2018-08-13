@@ -15,7 +15,7 @@ export default function TouchDrag(list, mover, layout) {
     var lastPageX,
         startTransition;
 
-    list.parent()[0].addEventListener(eStart, function (e) {
+    list.parentNode.addEventListener(eStart, function (e) {
         e.preventDefault();
         startTransition = mover.transitionState;
         lastPageX = e.pageX;

@@ -26,13 +26,13 @@ document.querySelector('.margin-border ul').addEventListener('moveEnd', function
 })
 
 var sliderFullPage = Slider({
-    ul: $('.full-page').find('ul'),
+    ul: document.querySelector('.full-page ul'),
     infiniteScroll: false,
-    touchDrag: false
+    touchDrag: true
 });
 
 var sliderMarginBorder = Slider({
-    ul: $('.margin-border').find('ul'),
+    ul: document.querySelector('.margin-border ul'),
     infiniteScroll: true,
     touchDrag: true
 });
