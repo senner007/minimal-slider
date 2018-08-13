@@ -61,7 +61,7 @@ document.querySelector(".next").addEventListener(eClick, function (e) {
 
 // mousewheel event
 if ( eClick === 'click' || eClick === 'pointerdown') {
-    $('.margin-border')[0].addEventListener("wheel", function (e) {
+    document.querySelector('.margin-border').addEventListener("wheel", function (e) {
         e.preventDefault();
         e.stopPropagation();
         document.body.style.overflowY = "hidden";
