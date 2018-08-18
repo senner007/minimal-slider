@@ -28,9 +28,10 @@ export default function Mover (listJs, speed, moveEndCallback) {
             prevSpeed = setSpeed;
 
             if (!callback) return;
-            setTimeout(function () {
-                callback();
-            },  20) // wait for the css to apply
+
+            var blabla = listJs.offsetWidth; // force reflow
+            callback();
+
         }
     }
 }
