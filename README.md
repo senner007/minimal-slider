@@ -39,3 +39,5 @@ minimal slider
   - Chrome
   - Firefox
   - Edge
+  - Safari IOS
+  - Chrome IOS
