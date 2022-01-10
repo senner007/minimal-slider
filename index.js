@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import {
     Slider
-} from './src/slider';
+} from './src/Slider';
 
 import './css.css';
 
